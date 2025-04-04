@@ -37,12 +37,12 @@ def main():
     
     # Define los argumentos de entrenamiento
     training_args = TrainingArguments(
-        output_dir="./results",             # Directorio donde se guardarán los resultados
+        output_dir="./v1",             # Directorio donde se guardarán los resultados
         num_train_epochs=3,                 # Número de épocas de entrenamiento
         per_device_train_batch_size=4,      # Tamaño de batch para entrenamiento
         per_device_eval_batch_size=4,       # Tamaño de batch para evaluación
         learning_rate=5e-5,                 # Tasa de aprendizaje
-        evaluation_strategy="steps",        # Evalúa cada ciertos pasos (nota: warning por usar evaluation_strategy)
+        eval_strategy="steps",        # Evalúa cada ciertos pasos (nota: warning por usar eval_strategy)
         save_steps=500,                     # Guarda el modelo cada 500 pasos
         eval_steps=500,                     # Evalúa cada 500 pasos
         logging_steps=100,                  # Registra cada 100 pasos
@@ -65,8 +65,8 @@ def main():
     print("Resultados de la evaluación:", eval_results)
     
     # Guarda el modelo y el tokenizador entrenados
-    model.save_pretrained("./broslunas_model_llm")
-    tokenizer.save_pretrained("./broslunas_model_llm")
+    model.save_pretrained("./broslunas_model_llm-v1")
+    tokenizer.save_pretrained("./broslunas_model_llm-v1")
 
 if __name__ == "__main__":
     main()
