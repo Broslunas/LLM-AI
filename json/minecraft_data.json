@@ -192,5 +192,168 @@
   { "text": "Los mapas del tesoro pueden encontrarse en naufragios o ruinas." },
   {
     "text": "Los bloques de comandos no están disponibles en supervivencia sin trucos."
-  }
+  },
+  {
+    "text": "Los axolotes ayudan a combatir mobs acuáticos y pueden regenerar vida."
+  },
+  {
+    "text": "Las cabras embisten y pueden hacer caer al jugador de acantilados."
+  },
+  {
+    "text": "Los bloques de miel reducen el daño por caída y pegan a otros bloques."
+  },
+  {
+    "text": "Las hojas de cerezo caen partículas rosadas al caminar sobre ellas."
+  },
+  {
+    "text": "Los comparadores de Redstone miden estados de inventarios y señales."
+  },
+  {
+    "text": "Las varillas de cobre atraen rayos y evitan incendios en estructuras."
+  },
+  {
+    "text": "Los fragmentos de cerámica se combinan para hacer vasijas decorativas."
+  },
+  {
+    "text": "Los camellos permiten montar a dos jugadores y esquivar ataques saltando."
+  },
+  {
+    "text": "Los paquetes almacenan múltiples ítems en un solo espacio del inventario."
+  },
+  {
+    "text": "Las cabezas de Wither se obtienen al matar al Wither con explosiones."
+  },
+  {
+    "text": "Los murciélagos no interactúan pero indican cuevas cercanas con su sonido."
+  },
+  {
+    "text": "Las esporas de las flores de coro pueden teñirse de colores diferentes."
+  },
+  {
+    "text": "Los sniffers excavan la tierra para encontrar semillas antiguas de plantas."
+  },
+  {
+    "text": "Las ranas adultas producen bloques de froglight al comer magma cubes."
+  },
+  {
+    "text": "El bioma de manglar tiene raíces aéreas y barro que se convierte en arcilla."
+  },
+  {
+    "text": "Las cañas de bambú crecen rápidamente y sirven como combustible eficiente."
+  },
+  {
+    "text": "Los bloques luminosos de glowstone iluminan bajo el agua sin apagarse."
+  },
+  {
+    "text": "Los allays recolectan ítems similares al que llevan en sus manos."
+  },
+  {
+    "text": "Las cabañas de brujas generan en pantanos y tienen calderos con pociones."
+  },
+  {
+    "text": "Los pilares de obsidiana en el End protegen los cristales curativos del dragón."
+  },
+  {
+    "text": "Las semillas de nether crecen en cualquier dimensión con suficiente luz."
+  },
+  {
+    "text": "Los bloques de piedra luminiscente emiten luz según el mineral usado."
+  },
+  {
+    "text": "Los biomas de badlands tienen terracota de colores naturales y vetas de oro."
+  },
+  {
+    "text": "Las placas de presión de peso diferencian entre entidades y jugadores."
+  },
+  {
+    "text": "Las espadas de netherita flotan en la lava, evitando perderlas al morir."
+  },
+  {
+    "text": "Los cofres reforzados con cobre no pueden ser destruidos por explosiones."
+  },
+  {
+    "text": "Las estalactitas de dripstone gotean agua o lava lentamente en cauldrons."
+  },
+  {
+    "text": "Los biomas de cuevas escultas tienen formaciones geológicas gigantes."
+  },
+  {
+    "text": "Los bloques de caliza pulida se usan para construcciones estilo griego."
+  },
+  {
+    "text": "Las cabezas de mobs decorativas se obtienen cargando creeper con tridente."
+  },
+  {
+    "text": "Los canales de lava ocultos en bastiones del Nether contienen escondites."
+  },
+  {
+    "text": "Las armaduras con encantamiento Aqua Affinity mejoran minería submarina."
+  },
+  {
+    "text": "Los zorros domesticados recogen objetos del suelo pero los sueltan al dormir."
+  },
+  {
+    "text": "Las estructuras de ciudades antiguas contienen trampas de sculk y wardens."
+  },
+  {
+    "text": "Los bloques de slime permiten crear elevadores y mecanismos de salto."
+  },
+  {
+    "text": "Las algas marinas aceleran el crecimiento del coral en biomas oceánicos."
+  },
+  {
+    "text": "Los bloques de concreto se crean mezclando polvo de color con grava y arena."
+  },
+  {
+    "text": "Las cabezas de mobs en end rods crean lámparas colgantes decorativas."
+  },
+  { "text": "Los cartógrafos venden mapas de bosques y mansiones de bosques." },
+  {
+    "text": "Las herramientas de oro minan más rápido pero tienen menor durabilidad."
+  },
+  {
+    "text": "Los biomas de hongos son los únicos donde no spawnear mobs hostiles."
+  },
+  {
+    "text": "Las puertas de coral solo se pueden abrir con picaportes de redstone."
+  },
+  {
+    "text": "Los biomas de taiga congelada tienen iglús con sótanos secretos."
+  },
+  {
+    "text": "Las cabezas de dragón del End emiten señal de redstone cuando alguien pasa."
+  },
+  { "text": "Los bloques de amatista vibran y suenan al caminar sobre ellos." },
+  {
+    "text": "Las armaduras dyed con tinta de calamar permiten personalizar colores."
+  },
+  {
+    "text": "Los mobs pasivos huyen si el jugador tiene efecto de mala suerte."
+  },
+  {
+    "text": "Las cabras soltaran cuernos al chocar contra bloques de piedra o cobre."
+  },
+  { "text": "Los bloques de slime en el Nether no se derriten por el calor." },
+  {
+    "text": "Las paredes de ladrillos del Nether resisten explosiones mejor que otros bloques."
+  },
+  {
+    "text": "Los saqueadores atacan aldeas y dejan bad omen al ser derrotados."
+  },
+  {
+    "text": "Los biomas de desierto tienen pozos ocultos con cofres bajo la arena."
+  },
+  {
+    "text": "Las cabañas en las montañas contienen cofres con semillas de calabaza."
+  },
+  {
+    "text": "Los bloques de cobre encerados no se oxidan y mantienen su color original."
+  },
+  {
+    "text": "Las velas en tortas se pueden soplar para hacer un deseo de cumpleaños."
+  },
+  {
+    "text": "Los biomas de bosque oscuro requieren antorchas de flores para explorar."
+  },
+  { "text": "Las cabras monteses pueden saltar hasta 10 bloques de altura." }
 ]
