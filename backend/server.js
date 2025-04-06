@@ -9,7 +9,7 @@ const app = express();
 // Middlewares
 app.use(
   cors({
-    origin: "http://localhost:4321", // Reemplaza con tu URL de frontend
+    origin: ["http://localhost:4321", "https://chat.broslunas.com"], // Agrega ambas URLs
     credentials: true, // Permite enviar cookies/tokens
     methods: ["GET", "POST", "PUT", "DELETE"],
   })
