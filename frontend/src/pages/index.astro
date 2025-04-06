@@ -1,0 +1,22 @@
+---
+import ChatBox from '../components/ChatBox.astro';
+import Cookies from 'js-cookie';
+
+const token = Cookies.get('token'); // Obtener el token desde las cookies
+const isLoggedIn = !!token; // Verificar si el usuario está logeado
+---
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Página Principal</title>
+  </head>
+  <body>
+    <h1>Bienvenido a la aplicación</h1>
+    { !isLoggedIn && (
+      <p>
+        Por favor, <a href="/login">inicia sesión</a> o <a href="/register">regístrate</a>.
+      </p>
+    ) }
+    <ChatBox token={token} />
+  </body>
+</html>

@@ -1,0 +1,23 @@
+---
+// src/pages/register.astro
+import RegisterForm from '../components/RegisterForm.jsx';
+import Cookies from 'js-cookie';
+
+const token = Cookies.get('token');
+if (token) {
+  window.location.href = '/'; // Redirigir al inicio si ya está logeado
+}
+---
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Registro</title>
+  </head>
+  <body>
+    <h1>Registro de Usuario</h1>
+    <RegisterForm client:load />
+    <p>
+      ¿Ya tienes cuenta? <a href="/login">Inicia sesión aquí</a>
+    </p>
+  </body>
+</html>

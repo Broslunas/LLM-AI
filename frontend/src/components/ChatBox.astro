@@ -1,0 +1,63 @@
+---
+export interface Props {}
+---
+<section id="chatbox">
+  <div id="chat-messages" style="border: 1px solid #ccc; height: 300px; overflow-y: auto; padding: 10px;">
+    <!-- Aquí aparecerán los mensajes -->
+  </div>
+  <form id="chat-form" style="margin-top: 10px;">
+    <input type="text" id="chat-input" placeholder="Escribe tu mensaje..." style="width: 80%; padding: 5px;" />
+    <button type="submit" style="padding: 5px 10px;">Enviar</button>
+  </form>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const chatForm = document.getElementById('chat-form');
+      const chatInput = document.getElementById('chat-input');
+      const chatMessages = document.getElementById('chat-messages');
+
+      // Obtener el token desde las cookies
+      const getCookie = (name: string) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop()?.split(';')?.shift() ?? '';
+      };
+      const token = getCookie('token');
+
+    if (chatForm) {
+      chatForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const chatInputElement = chatInput as HTMLInputElement;
+        const message = chatInputElement?.value.trim();
+        if (!message) return;
+
+        try {
+        const response = await fetch('http://localhost:5000/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ message })
+        });
+        if (!response.ok) {
+          throw new Error('Error al enviar el mensaje');
+        }
+
+        const data = await response.json();
+        if (chatMessages) {
+          const newMessage = document.createElement('div');
+          newMessage.textContent = `Respuesta: ${data.response}`;
+          chatMessages.appendChild(newMessage);
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        } catch (error) {
+        console.error(error);
+        alert('Hubo un problema al enviar el mensaje.');
+        }
+
+        chatInputElement.value = '';
+      });
+    }
+      });
+  </script>
+</section>
