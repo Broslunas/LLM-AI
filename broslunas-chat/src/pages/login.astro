@@ -1,0 +1,100 @@
+---
+export const prerender = false; // Disable prerendering
+import MainLayout from "../layouts/MainLayout.astro";
+import { MongoClient } from 'mongodb';
+import { config } from 'dotenv';
+
+config(); // Load environment variables
+
+const MONGO_URI = process.env.MONGO_URI || '';
+if (!MONGO_URI) {
+  throw new Error('MONGO_URI is not defined in the environment variables.');
+}
+
+const client = new MongoClient(MONGO_URI);
+---
+<MainLayout>
+  <form id="loginForm" method="POST">
+      <h2>Login</h2>
+      <input name="username" type="text" placeholder="Username" required />
+      <input name="password" type="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+  </form>
+  <script>
+    async function handleLogin(event: SubmitEvent) {
+      event.preventDefault();
+      const formData = new FormData(event.target as HTMLFormElement);
+      const user = {
+        username: formData.get("username"),
+        password: formData.get("password"),
+      };
+
+      try {
+        const response = await fetch("/api/login", {
+          method: "POST", // Ensure the method is POST
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(user),
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          document.cookie = `loggedIn=true; path=/;`;
+          document.cookie = `username=${data.username}; path=/;`;
+          alert("Login successful!");
+        } else {
+          alert("Invalid username or password.");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Failed to login.");
+      }
+    }
+
+    const loginForm = document.getElementById("loginForm");
+    if (loginForm) {
+      loginForm.addEventListener("submit", handleLogin);
+    } else {
+      console.error("Login form not found.");
+    }
+  </script>
+  <style>
+        body {
+          background-color: #1a1a1a;
+          color: #f0f0f0;
+          font-family: Arial, sans-serif;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          margin: 0;
+        }
+        form {
+          background-color: #333333;
+          padding: 20px;
+          border-radius: 5px;
+          width: 300px;
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        input {
+          width: 100%;
+          padding: 10px;
+          margin-bottom: 10px;
+          border: 1px solid #555555;
+          border-radius: 5px;
+          background-color: #2a2a2a;
+          color: #f0f0f0;
+        }
+        button {
+          width: 100%;
+          padding: 10px;
+          background-color: #e67e22;
+          border: none;
+          border-radius: 5px;
+          color: #ffffff;
+          cursor: pointer;
+        }
+        button:hover {
+          background-color: #d35400;
+        }
+      </style>
+</MainLayout>

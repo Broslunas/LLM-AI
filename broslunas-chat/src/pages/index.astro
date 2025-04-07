@@ -1,11 +1,13 @@
 ---
 import ChatBox from '../components/ChatBox.jsx';
+import MainLayout from '../layouts/MainLayout.astro';
+
+export const prerender = false; // Disable prerendering
 ---
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Broslunas</title>
-    <style>
+<MainLayout>
+  <h1>Broslunas Chat</h1>
+  <ChatBox client:load />
+  <style>
       body {
         background-color: #1a1a1a; /* Gris muy oscuro */
         color: #f0f0f0; /* Gris claro para mejor legibilidad */
@@ -65,11 +67,21 @@ import ChatBox from '../components/ChatBox.jsx';
       ::-webkit-scrollbar-thumb:hover {
         background-color: #d35400;
       }
+      header {
+        background-color: #333333; /* Fondo gris oscuro */
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      nav a {
+        color: #f0f0f0; /* Gris claro */
+        text-decoration: none;
+        margin: 0 10px;
+        font-size: 1rem;
+      }
+      nav a:hover {
+        color: #e67e22; /* Naranja */
+      }
     </style>
-  </head>
-  <body>
-    <h1>Broslunas Chat</h1>
-    <!-- Se carga el componente en el cliente -->
-    <ChatBox client:load />
-  </body>
-</html>
+</MainLayout>
