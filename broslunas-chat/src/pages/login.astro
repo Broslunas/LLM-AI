@@ -11,7 +11,12 @@ if (!MONGO_URI) {
   throw new Error('MONGO_URI is not defined in the environment variables.');
 }
 
-const client = new MongoClient(MONGO_URI);
+// Check if the user is already logged in
+const cookies = Astro.request.headers.get('cookie') || '';
+const isLoggedIn = cookies.includes('loggedIn=true');
+if (isLoggedIn) {
+  return Astro.redirect('/'); // Redirect to the homepage if logged in
+}
 ---
 <MainLayout>
   <form id="loginForm" method="POST">
@@ -40,7 +45,7 @@ const client = new MongoClient(MONGO_URI);
           const data = await response.json();
           document.cookie = `loggedIn=true; path=/;`;
           document.cookie = `username=${data.username}; path=/;`;
-          alert("Login successful!");
+          window.location.href = "/"; // Redirect to the homepage
         } else {
           alert("Invalid username or password.");
         }
