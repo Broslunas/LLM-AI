@@ -15,7 +15,7 @@ export async function POST({ request }) {
         messages: [
           {
             role: "user",
-            content: `Siempre responde en español. Utiliza un tono informal y de colegueo. Si ves que es muy larga la respuesta haz que no, se breve y preciso: ${query}`,
+            content: `IMPORTANTE: SOLO RESPONDER PREGUNTAS SOBRE MINECRAFT. Siempre responde en español. Utiliza un tono informal y de colegueo. Si ves que es muy larga la respuesta haz que no, se breve y preciso: ${query}`,
           },
         ],
         temperature: 1,
