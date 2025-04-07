@@ -20,23 +20,56 @@ export async function POST({ request }) {
         ],
         temperature: 1,
         max_tokens: 500,
+        stream: true, // Enable streaming
       }),
     });
 
-    const data = await res.json();
+    const stream = new ReadableStream({
+      start(controller) {
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder("utf-8");
 
-    const message = data.choices?.[0]?.message?.content ?? "Sin respuesta.";
-    return new Response(JSON.stringify({ response: message }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" },
+        async function push() {
+          const { value, done } = await reader.read();
+          if (done) {
+            controller.close();
+            return;
+          }
+          const chunk = decoder.decode(value);
+          const lines = chunk.split("\n").filter((line) => line.trim() !== "");
+          for (const line of lines) {
+            if (line.startsWith("data:")) {
+              const json = line.replace("data: ", "").trim();
+              if (json === "[DONE]") {
+                controller.close();
+                return;
+              }
+              try {
+                const parsed = JSON.parse(json);
+                const content = parsed.choices?.[0]?.delta?.content;
+                if (content) {
+                  controller.enqueue(content);
+                }
+              } catch (error) {
+                console.error("Error parsing chunk:", error);
+              }
+            }
+          }
+          push();
+        }
+
+        push();
+      },
+    });
+
+    return new Response(stream, {
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "no-cache",
+      },
     });
   } catch (error) {
     console.error("Error en la llamada a DeepSeek:", error);
-    return new Response(
-      JSON.stringify({ response: "Error al procesar la solicitud." }),
-      {
-        status: 500,
-      }
-    );
+    return new Response("Error al procesar la solicitud.", { status: 500 });
   }
 }

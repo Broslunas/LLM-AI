@@ -12,28 +12,34 @@ export default function ChatBox() {
   const chatContainerRef = useRef(null);
 
   const sendMessage = async () => {
-    // if (!isLoggedIn) {
-    //   setShowModal(true); // Show modal if not logged in
-    //   return;
-    // }
     if (!query.trim()) return;
     setChatHistory((prev) => [...prev, { sender: "user", content: query }]);
     setQuery("");
     setLoading(true);
+    let aiMessage = { sender: "ai", content: "" };
+    setChatHistory((prev) => [...prev, aiMessage]);
+
     try {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query }),
       });
-      const data = await res.json();
-      setChatHistory((prev) => [
-        ...prev,
-        { sender: "ai", content: data.response },
-      ]);
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder("utf-8");
+      let done = false;
+
+      while (!done) {
+        const { value, done: readerDone } = await reader.read();
+        done = readerDone;
+        const chunk = decoder.decode(value, { stream: true });
+        aiMessage.content += chunk;
+        setChatHistory((prev) => [...prev.slice(0, -1), aiMessage]);
+      }
     } catch (error) {
       setChatHistory((prev) => [
-        ...prev,
+        ...prev.slice(0, -1),
         { sender: "ai", content: "Error al contactar con la IA." },
       ]);
     } finally {
