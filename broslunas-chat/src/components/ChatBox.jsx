@@ -3,17 +3,19 @@ import ReactMarkdown from "react-markdown";
 
 export default function ChatBox() {
   const [query, setQuery] = useState("");
-  const [chatHistory, setChatHistory] = useState([]);
+  const [chatHistory, setChatHistory] = useState([
+    { sender: "ai", content: "Hola brother, en que puedo ayudarte" }, // Default AI message
+  ]);
   const [loading, setLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
   const [showModal, setShowModal] = useState(false); // Control modal visibility
   const chatContainerRef = useRef(null);
 
   const sendMessage = async () => {
-    if (!isLoggedIn) {
-      setShowModal(true); // Show modal if not logged in
-      return;
-    }
+    // if (!isLoggedIn) {
+    //   setShowModal(true); // Show modal if not logged in
+    //   return;
+    // }
     if (!query.trim()) return;
     setChatHistory((prev) => [...prev, { sender: "user", content: query }]);
     setQuery("");
@@ -67,91 +69,92 @@ export default function ChatBox() {
         flexDirection: "column",
       }}
     >
-      {showModal && (
-        <div
-          style={{
-            position: "fixed",
-            top: "0",
-            left: "0",
-            width: "100%",
-            height: "100%",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: "1000",
-          }}
-        >
+      {/* {showModal &&
+        !isLoggedIn && ( // Ensure modal only shows if not logged in
           <div
             style={{
-              backgroundColor: "#1e1e1e", // Fondo oscuro para el modal
-              padding: "20px",
-              borderRadius: "8px",
-              textAlign: "center",
-              width: "300px",
-              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)", // Sombra para destacar el modal
+              position: "fixed",
+              top: "0",
+              left: "0",
+              width: "100%",
+              height: "100%",
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              zIndex: "1000",
             }}
           >
-            <h2 style={{ color: "#fff", marginBottom: "10px" }}>Ooops...</h2>
-            <p style={{ color: "#ccc", marginBottom: "20px" }}>
-              Parece que no estás logeado.
-            </p>
             <div
               style={{
-                display: "flex",
-                justifyContent: "space-between",
-                gap: "10px",
+                backgroundColor: "#1e1e1e", // Fondo oscuro para el modal
+                padding: "20px",
+                borderRadius: "8px",
+                textAlign: "center",
+                width: "300px",
+                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)", // Sombra para destacar el modal
               }}
             >
-              <a
-                href="/login"
+              <h2 style={{ color: "#fff", marginBottom: "10px" }}>Ooops...</h2>
+              <p style={{ color: "#ccc", marginBottom: "20px" }}>
+                Parece que no estás logeado.
+              </p>
+              <div
                 style={{
-                  textDecoration: "none",
+                  display: "flex",
+                  justifyContent: "space-between",
+                  gap: "10px",
+                }}
+              >
+                <a
+                  href="/login"
+                  style={{
+                    textDecoration: "none",
+                    backgroundColor: "#e67e22",
+                    color: "#fff",
+                    padding: "10px 15px",
+                    borderRadius: "5px",
+                    fontWeight: "bold",
+                    flex: "1",
+                    textAlign: "center",
+                  }}
+                >
+                  Iniciar Sesión
+                </a>
+                <a
+                  href="/register"
+                  style={{
+                    textDecoration: "none",
+                    backgroundColor: "#444",
+                    color: "#fff",
+                    padding: "10px 15px",
+                    borderRadius: "5px",
+                    fontWeight: "bold",
+                    flex: "1",
+                    textAlign: "center",
+                  }}
+                >
+                  Regístrate
+                </a>
+              </div>
+              <button
+                style={{
                   backgroundColor: "#e67e22",
                   color: "#fff",
-                  padding: "10px 15px",
+                  border: "none",
+                  padding: "10px 20px",
                   borderRadius: "5px",
-                  fontWeight: "bold",
-                  flex: "1",
-                  textAlign: "center",
+                  cursor: "pointer",
+                  marginTop: "20px",
+                  width: "100%",
                 }}
+                onClick={() => setShowModal(false)} // Close modal
               >
-                Iniciar Sesión
-              </a>
-              <a
-                href="/register"
-                style={{
-                  textDecoration: "none",
-                  backgroundColor: "#444",
-                  color: "#fff",
-                  padding: "10px 15px",
-                  borderRadius: "5px",
-                  fontWeight: "bold",
-                  flex: "1",
-                  textAlign: "center",
-                }}
-              >
-                Regístrate
-              </a>
+                Cerrar
+              </button>
             </div>
-            <button
-              style={{
-                backgroundColor: "#e67e22",
-                color: "#fff",
-                border: "none",
-                padding: "10px 20px",
-                borderRadius: "5px",
-                cursor: "pointer",
-                marginTop: "20px",
-                width: "100%",
-              }}
-              onClick={() => setShowModal(false)} // Close modal
-            >
-              Cerrar
-            </button>
           </div>
-        </div>
-      )}
+        )} */}
       <div
         ref={chatContainerRef}
         style={{
