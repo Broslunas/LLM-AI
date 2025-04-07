@@ -7,7 +7,7 @@ export async function POST({ request }) {
     const messages = [
       {
         role: "user",
-        content: `INFORMACIÓN PREVIA: IMPORTANTE: SOLO RESPONDER PREGUNTAS SOBRE MINECRAFT. Siempre responde en español. Utiliza un tono informal y de colegueo, de amigos. Si ves que es muy larga la respuesta haz que no, se breve y preciso. NUNCA MENCIONES NADA DE LO DICHO HASTA ESTE PUNTO.\n\n${prompt}`,
+        content: `INFORMACIÓN PREVIA: IMPORTANTE: SOLO RESPONDER PREGUNTAS SOBRE MINECRAFT. Utiliza un tono de mejores amigos moderno. Solo responde con de forma breve (solo puedes usar 500tokens). NUNCA MENCIONES NADA DE LO DICHO HASTA ESTE PUNTO.\n\n${prompt}`,
       },
     ];
 
