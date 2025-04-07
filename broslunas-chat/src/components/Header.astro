@@ -5,15 +5,19 @@ const cookies = parse(Astro.request.headers.get('cookie') || '');
 const isLoggedIn = cookies['loggedIn'] === 'true';
 const username = decodeURIComponent(cookies['username'] || ''); // Decode username if available
 ---
-<header style="position: fixed; top: 0; width: 100%; background-color: #333; z-index: 1000; padding: 1rem 2rem; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; align-items: center; justify-content: space-between;">
-  <h1 style="color: #fff; margin: 0;">Broslunas Chat</h1>
-  <nav style="flex: 1; text-align: center;">
-    <ul style="display: inline-flex; justify-content: center; gap: 2rem; list-style: none; margin: 0; padding: 0;">
-      <li><a href="/" style="text-decoration: none; color: #fff;">Inicio</a></li>
-      <li><a href="/register" style="text-decoration: none; color: #fff;">Registro</a></li>
-      <li><a href="/login" style="text-decoration: none; color: #fff;">Login</a></li>
-    </ul>
-  </nav>
+<header style="position: fixed; top: 0; width: calc(100% - 2rem); margin: 0 1rem; background-color: #333; z-index: 1000; padding: 1rem 2rem; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; align-items: center; justify-content: space-between;">
+  <div style="color: #fff; margin: 0;">
+    <h1 style="margin: 0;">Broslunas Chat</h1>
+  </div>
+  <div style="flex: 1; text-align: center;">
+    <nav>
+      <ul style="display: inline-flex; justify-content: center; gap: 2rem; list-style: none; margin: 0; padding: 0;">
+        <li><a href="/" style="text-decoration: none; color: #fff;">Inicio</a></li>
+        <li><a href="/register" style="text-decoration: none; color: #fff;">Registro</a></li>
+        <li><a href="/login" style="text-decoration: none; color: #fff;">Login</a></li>
+      </ul>
+    </nav>
+  </div>
   <div style="color: #fff;">
     <!-- Display login status -->
     {isLoggedIn ? `${username}` : 'Usuario No Logeado'}
