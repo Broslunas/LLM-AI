@@ -20,10 +20,17 @@ export default function ChatBox() {
     setChatHistory((prev) => [...prev, aiMessage]);
 
     try {
+      const formattedHistory = chatHistory
+        .filter((message) => message.sender !== "ai" || !message.loading)
+        .map((message) => `${message.sender.toUpperCase()}: ${message.content}`)
+        .join("\n");
+
+      const fullPrompt = `${formattedHistory}\n-- FIN DE LA CONVERSACIÓN\nUSER: ${query}`;
+
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ query }),
+        body: JSON.stringify({ prompt: fullPrompt }),
       });
 
       const reader = res.body.getReader();
@@ -109,6 +116,7 @@ export default function ChatBox() {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             display: flex;
             flex-direction: column;
+            font-family: 'Roboto', sans-serif; /* Changed font family */
           }
           .chat-history {
             flex: 1;
@@ -117,6 +125,7 @@ export default function ChatBox() {
             background-color: #2a2a2a;
             border-radius: 5px;
             border: 1px solid #444;
+            font-size: 1.2rem; /* Increased font size */
           }
           .message {
             margin: 5px 0;
@@ -133,6 +142,7 @@ export default function ChatBox() {
             border-radius: 12px;
             max-width: 80%;
             word-wrap: break-word;
+            font-size: 1.2rem; /* Increased font size */
           }
           .message.user .message-content {
             background-color: #e67e22;
@@ -169,6 +179,8 @@ export default function ChatBox() {
             border-radius: 5px;
             padding: 10px;
             resize: none;
+            font-size: 1.4rem; /* Increased font size */
+            font-family: 'Roboto', sans-serif; /* Changed font family */
           }
           .chat-input button {
             background-color: #e67e22;
@@ -182,6 +194,7 @@ export default function ChatBox() {
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 1.2rem; /* Increased font size */
           }
           .chat-input button:disabled {
             background-color: #777;
