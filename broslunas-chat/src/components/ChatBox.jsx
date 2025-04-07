@@ -16,7 +16,7 @@ export default function ChatBox() {
     setChatHistory((prev) => [...prev, { sender: "user", content: query }]);
     setQuery("");
     setLoading(true);
-    let aiMessage = { sender: "ai", content: "" };
+    let aiMessage = { sender: "ai", content: "", loading: true };
     setChatHistory((prev) => [...prev, aiMessage]);
 
     try {
@@ -34,8 +34,12 @@ export default function ChatBox() {
         const { value, done: readerDone } = await reader.read();
         done = readerDone;
         const chunk = decoder.decode(value, { stream: true });
-        aiMessage.content += chunk;
-        setChatHistory((prev) => [...prev.slice(0, -1), aiMessage]);
+
+        if (chunk) {
+          aiMessage.content += chunk;
+          aiMessage.loading = false; // Remove spinner once the first chunk arrives
+          setChatHistory((prev) => [...prev.slice(0, -1), aiMessage]);
+        }
       }
     } catch (error) {
       setChatHistory((prev) => [
@@ -75,92 +79,6 @@ export default function ChatBox() {
         flexDirection: "column",
       }}
     >
-      {/* {showModal &&
-        !isLoggedIn && ( // Ensure modal only shows if not logged in
-          <div
-            style={{
-              position: "fixed",
-              top: "0",
-              left: "0",
-              width: "100%",
-              height: "100%",
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              zIndex: "1000",
-            }}
-          >
-            <div
-              style={{
-                backgroundColor: "#1e1e1e", // Fondo oscuro para el modal
-                padding: "20px",
-                borderRadius: "8px",
-                textAlign: "center",
-                width: "300px",
-                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.3)", // Sombra para destacar el modal
-              }}
-            >
-              <h2 style={{ color: "#fff", marginBottom: "10px" }}>Ooops...</h2>
-              <p style={{ color: "#ccc", marginBottom: "20px" }}>
-                Parece que no estás logeado.
-              </p>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  gap: "10px",
-                }}
-              >
-                <a
-                  href="/login"
-                  style={{
-                    textDecoration: "none",
-                    backgroundColor: "#e67e22",
-                    color: "#fff",
-                    padding: "10px 15px",
-                    borderRadius: "5px",
-                    fontWeight: "bold",
-                    flex: "1",
-                    textAlign: "center",
-                  }}
-                >
-                  Iniciar Sesión
-                </a>
-                <a
-                  href="/register"
-                  style={{
-                    textDecoration: "none",
-                    backgroundColor: "#444",
-                    color: "#fff",
-                    padding: "10px 15px",
-                    borderRadius: "5px",
-                    fontWeight: "bold",
-                    flex: "1",
-                    textAlign: "center",
-                  }}
-                >
-                  Regístrate
-                </a>
-              </div>
-              <button
-                style={{
-                  backgroundColor: "#e67e22",
-                  color: "#fff",
-                  border: "none",
-                  padding: "10px 20px",
-                  borderRadius: "5px",
-                  cursor: "pointer",
-                  marginTop: "20px",
-                  width: "100%",
-                }}
-                onClick={() => setShowModal(false)} // Close modal
-              >
-                Cerrar
-              </button>
-            </div>
-          </div>
-        )} */}
       <div
         ref={chatContainerRef}
         style={{
@@ -193,6 +111,20 @@ export default function ChatBox() {
                 wordWrap: "break-word",
               }}
             >
+              {message.sender === "ai" && message.loading ? (
+                <span
+                  style={{
+                    display: "inline-block",
+                    width: "10px",
+                    height: "10px",
+                    border: "2px solid #e67e22", // Naranja para el borde
+                    borderTop: "2px solid transparent", // Transparente en la parte superior
+                    borderRadius: "50%",
+                    animation: "spin 1s linear infinite", // Animación de giro
+                    marginRight: "5px",
+                  }}
+                ></span>
+              ) : null}
               {message.sender === "ai" ? (
                 <ReactMarkdown>{message.content}</ReactMarkdown>
               ) : (
@@ -255,6 +187,18 @@ export default function ChatBox() {
           </span>
         </button>
       </div>
+      <style>
+        {`
+          @keyframes spin {
+            from {
+              transform: rotate(0deg);
+            }
+            to {
+              transform: rotate(360deg);
+            }
+          }
+        `}
+      </style>
     </div>
   );
 }

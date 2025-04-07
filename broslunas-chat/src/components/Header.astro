@@ -12,10 +12,7 @@ const username = cookies['username'] ? decodeURIComponent(cookies['username']) :
   <div style="flex: 1; text-align: center;">
     <nav>
       <ul style="display: inline-flex; justify-content: center; gap: 2rem; list-style: none; margin: 0; padding: 0;">
-        <li><a href="/" style="text-decoration: none; color: #fff;">Inicio</a></li>
-        {isLoggedIn ? (
-          <li><a href="#" style="text-decoration: none; color: #fff;">No</a></li>
-        ) : (
+        {!isLoggedIn && (
           <>
             <li><a href="/register" style="text-decoration: none; color: #fff;">Registro</a></li>
             <li><a href="/login" style="text-decoration: none; color: #fff;">Login</a></li>
