@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import ReactMarkdown from "react-markdown";
 
 export default function ChatBox() {
   const [query, setQuery] = useState("");
   const [chatHistory, setChatHistory] = useState([]);
   const [loading, setLoading] = useState(false);
+  const chatContainerRef = useRef(null);
 
   const sendMessage = async () => {
     if (!query.trim()) return;
@@ -38,26 +40,38 @@ export default function ChatBox() {
     }
   };
 
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop =
+        chatContainerRef.current.scrollHeight;
+    }
+  }, [chatHistory]);
+
   return (
     <div
       style={{
         backgroundColor: "#3a3a3a", // Fondo más claro
-        padding: "20px",
+        padding: "15px", // Reducir padding
         borderRadius: "8px",
-        maxWidth: "600px",
-        margin: "20px auto",
+        width: "60%", // Reducir el ancho al 60%
+        height: "400px", // Reducir la altura mínima
+        margin: "20px auto", // Centrar horizontalmente
         boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)", // Sombra para destacar
+        display: "flex",
+        flexDirection: "column",
       }}
     >
       <div
+        ref={chatContainerRef}
         style={{
-          maxHeight: "300px",
-          overflowY: "auto",
-          marginBottom: "10px",
+          flex: "1", // Ocupa el espacio restante
+          overflowY: "auto", // Habilitar scroll vertical
           padding: "10px",
           backgroundColor: "#2a2a2a", // Fondo más claro para el historial
           borderRadius: "5px",
           border: "1px solid #444",
+          scrollbarWidth: "thin", // Estilizar barra de scroll
+          scrollbarColor: "#e67e22 #2a2a2a", // Colores de la barra y el fondo
         }}
       >
         {chatHistory.map((message, index) => (
@@ -79,7 +93,11 @@ export default function ChatBox() {
                 wordWrap: "break-word",
               }}
             >
-              {message.content}
+              {message.sender === "ai" ? (
+                <ReactMarkdown>{message.content}</ReactMarkdown>
+              ) : (
+                message.content
+              )}
             </span>
           </div>
         ))}
@@ -89,12 +107,15 @@ export default function ChatBox() {
           display: "flex",
           gap: "10px", // Espacio entre el textarea y el botón
           alignItems: "center", // Alinear verticalmente
+          padding: "10px",
+          backgroundColor: "#2a2a2a", // Fondo más claro para el input
+          borderTop: "1px solid #444", // Línea superior
         }}
       >
         <textarea
           style={{
             flex: "1", // Ocupa todo el espacio disponible
-            height: "40px", // Reducir aún más la altura
+            height: "35px", // Reducir altura del textarea
             backgroundColor: "#444", // Fondo gris oscuro
             color: "#f0f0f0", // Texto gris claro
             border: "1px solid #555", // Borde gris
@@ -115,8 +136,8 @@ export default function ChatBox() {
             padding: "10px",
             borderRadius: "50%", // Hacer el botón circular
             cursor: loading ? "not-allowed" : "pointer", // Cambiar cursor si está cargando
-            width: "40px",
-            height: "40px",
+            width: "35px", // Reducir tamaño del botón
+            height: "35px",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -126,7 +147,7 @@ export default function ChatBox() {
         >
           <span
             style={{
-              fontSize: "16px",
+              fontSize: "14px", // Reducir tamaño del icono
               lineHeight: "1",
             }}
           >

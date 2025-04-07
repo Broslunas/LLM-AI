@@ -15,11 +15,11 @@ export async function POST({ request }) {
         messages: [
           {
             role: "user",
-            content: query,
+            content: `Siempre responde en español. Utiliza un tono informal y de colegueo. Si ves que es muy larga la respuesta haz que no, se breve y preciso: ${query}`,
           },
         ],
-        temperature: 0.5,
-        max_tokens: 100,
+        temperature: 1,
+        max_tokens: 500,
       }),
     });
 
