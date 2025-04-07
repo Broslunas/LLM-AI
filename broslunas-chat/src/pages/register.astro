@@ -101,5 +101,26 @@ if (isLoggedIn) {
         button:hover {
           background-color: #d35400;
         }
+        @media (max-width: 768px) {
+          form {
+            width: 90%;
+            padding: 15px;
+          }
+          input {
+            padding: 8px;
+          }
+          button {
+            padding: 8px;
+          }
+        }
+        @media (max-width: 480px) {
+          h2 {
+            font-size: 1.5rem;
+          }
+          form {
+            width: 100%;
+            padding: 10px;
+          }
+        }
       </style>
 </MainLayout>
