@@ -25,7 +25,10 @@ const menu = [
 			{isHomePage && (
 				<div class='logo-container'>
 					<h2 class='logo'>
-						<a href='/'>Broslunas Chat</a>
+						<a href='/'>
+							<img src='https://cdn.broslunas.com/favicon.png' alt='Broslunas Logo' class='logo-image' />
+							Broslunas Chat
+						</a>
 					</h2>
 				</div>
 			)}
@@ -136,14 +139,27 @@ const menu = [
 			margin-bottom: 16px;
 		}
 
+			.logo {
+			display: flex;
+			align-items: center;
+			font-size: 1.5rem;
+			font-weight: bold;
+		}
+
 		.logo a {
 			color: #ffffff;
-      text-decoration: none;
-			padding-right: 16px;
+			text-decoration: none;
+			display: flex;
+			align-items: center;
 		}
 
 		.logo a:hover {
-			color: #663c00;
+			color: #ff8c42;
+		}
+
+		.logo-image {
+			height: 1em;
+			margin-right: 8px;
 		}
 
 		.menu {
