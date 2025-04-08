@@ -13,11 +13,34 @@ if (!MONGO_URI || !JWT_SECRET) {
   );
 }
 
+if (MONGO_URI.includes(",")) {
+  throw new Error(
+    "MONGO_URI contains multiple service names, which is not allowed. Please ensure your MongoDB connection string is correctly configured in the .env file."
+  );
+}
+
+console.log(
+  "Connecting to MongoDB with URI:",
+  MONGO_URI.replace(/:\/\/.*@/, "://<credentials-hidden>@")
+);
+
 const client = new MongoClient(MONGO_URI);
+
+export const prerender = false;
 
 export async function POST({ request }: { request: Request }) {
   try {
-    const { username, password } = await request.json();
+    let body;
+    try {
+      body = await request.json();
+    } catch {
+      return new Response(JSON.stringify({ response: "Invalid JSON input." }), {
+        status: 400,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    const { username, password } = body;
 
     if (!username || !password) {
       return new Response(
@@ -26,12 +49,44 @@ export async function POST({ request }: { request: Request }) {
       );
     }
 
-    await client.connect();
+    try {
+      await client.connect();
+    } catch (mongoError) {
+      const error = mongoError as any; // Explicitly assert the type as 'any'
+      console.error("MongoDB connection error:", {
+        message: error.message,
+        code: error.code,
+        codeName: error.codeName,
+        uri: MONGO_URI.replace(/:\/\/.*@/, "://<credentials-hidden>@"), // Log sanitized URI
+      });
+
+      if (error.codeName === "AtlasError") {
+        return new Response(
+          JSON.stringify({
+            response:
+              "Database authentication failed. Please verify your MongoDB URI, username, and password in the .env file. Ensure the user has the correct permissions and the IP address is whitelisted in MongoDB Atlas.",
+          }),
+          { status: 500, headers: { "Content-Type": "application/json" } }
+        );
+      }
+
+      return new Response(
+        JSON.stringify({
+          response:
+            "Failed to connect to the database. Please try again later.",
+        }),
+        { status: 500, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
     const db = client.db("broslunas");
     const usersCollection = db.collection("users");
 
-    const user = await usersCollection.findOne({ username });
-    if (!user) {
+    // Find the user (case-insensitive match for username)
+    const user = await usersCollection.findOne({
+      username: { $regex: `^${username}$`, $options: "i" },
+    });
+    if (!user || !user.password) {
       return new Response(
         JSON.stringify({ response: "Usuario o contraseña incorrectos." }),
         { status: 401, headers: { "Content-Type": "application/json" } }

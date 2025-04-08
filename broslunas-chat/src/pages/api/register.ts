@@ -34,8 +34,12 @@ export async function POST({ request }: { request: Request }) {
 
     const existingUser = await usersCollection.findOne({ email });
     if (existingUser) {
+      console.warn(`User with email ${email} already exists.`);
       return new Response(
-        JSON.stringify({ response: "El usuario ya existe." }),
+        JSON.stringify({
+          response:
+            "El usuario ya existe. Por favor, use un correo electrónico diferente.",
+        }),
         { status: 409, headers: { "Content-Type": "application/json" } }
       );
     }
