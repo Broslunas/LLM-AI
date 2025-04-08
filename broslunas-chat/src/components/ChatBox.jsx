@@ -180,6 +180,7 @@ export default function ChatBox() {
             max-width: 80%;
             word-wrap: break-word;
             font-size: 1.2rem; /* Increased font size */
+            min-height: 35px; /* Ensures consistent height */
           }
           .message.user .message-content {
             background-color: #e67e22;
