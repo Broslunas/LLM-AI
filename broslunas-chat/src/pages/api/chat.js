@@ -22,7 +22,7 @@ export async function POST({ request }) {
         messages,
         temperature: 1,
         max_tokens: 500,
-        stream: true, // Enable streaming
+        stream: true,
       }),
     });
 

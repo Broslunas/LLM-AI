@@ -4,11 +4,11 @@ import ReactMarkdown from "react-markdown";
 export default function ChatBox() {
   const [query, setQuery] = useState("");
   const [chatHistory, setChatHistory] = useState([
-    { sender: "ai", content: "Hola brother, en que puedo ayudarte" }, // Default AI message
+    { sender: "ai", content: "Hola brother, en que puedo ayudarte" },
   ]);
   const [loading, setLoading] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
-  const [showModal, setShowModal] = useState(false); // Control modal visibility
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const chatContainerRef = useRef(null);
 
   const sendMessage = async () => {
@@ -44,7 +44,7 @@ export default function ChatBox() {
 
         if (chunk) {
           aiMessage.content += chunk;
-          aiMessage.loading = false; // Remove spinner once the first chunk arrives
+          aiMessage.loading = false;
           setChatHistory((prev) => [...prev.slice(0, -1), aiMessage]);
         }
       }

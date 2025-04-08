@@ -1,9 +1,9 @@
 ---
-export const prerender = false; // Disable prerendering
+export const prerender = false;
 import MainLayout from "../layouts/MainLayout.astro";
 import { config } from 'dotenv';
 
-config(); // Load environment variables
+config();
 
 const MONGO_URI = process.env.MONGO_URI || '';
 if (!MONGO_URI) {
@@ -14,7 +14,7 @@ if (!MONGO_URI) {
 const cookies = Astro.request.headers.get('cookie') || '';
 const isLoggedIn = cookies.includes('loggedIn=true');
 if (isLoggedIn) {
-  return Astro.redirect('/'); // Redirect to the homepage if logged in
+  return Astro.redirect('/');
 }
 ---
 <MainLayout>
@@ -35,7 +35,7 @@ if (isLoggedIn) {
 
       try {
         const response = await fetch("/api/login", {
-          method: "POST", // Ensure the method is POST
+          method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(user),
         });
@@ -44,7 +44,7 @@ if (isLoggedIn) {
           const data = await response.json();
           document.cookie = `loggedIn=true; path=/;`;
           document.cookie = `username=${data.username}; path=/;`;
-          window.location.href = "/"; // Redirect to the homepage
+          window.location.href = "/";
         } else {
           alert("Invalid username or password.");
         }
