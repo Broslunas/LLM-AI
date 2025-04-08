@@ -3,6 +3,7 @@ import { parse } from 'cookie';
 
 const cookies = parse(Astro.request.headers.get('cookie') || '');
 const isLoggedIn = cookies['loggedIn'] === 'true';
+const isHomePage = Astro.url.pathname === '/';
 
 import HeaderLink from './HeaderLink.astro';
 
@@ -23,9 +24,13 @@ const menu = [
 <header id='site-header'>
 	<div class='container'>
 		<nav class='nav'>
-			<h2 class='logo'>
-				<a href='/'>Broslunas Chat</a>
-			</h2>
+			{isHomePage && (
+				<div class='logo-container'>
+					<h2 class='logo'>
+						<a href='/'>Broslunas Chat</a>
+					</h2>
+				</div>
+			)}
 		</nav>
 		<div class='menu-container'>
 			<div class='menu'>
@@ -66,14 +71,10 @@ const menu = [
 		.container {
 			width: 100%;
 			margin: 0 auto;
-		}
+    }
 
 		.nav {
-			display: flex;
-			gap: 16px;
-			align-items: center;
-			justify-content: space-between;
-			padding: 12px 0;
+			display: block; /* Ensure the logo container takes full width */
 		}
 
 		.github-links {
@@ -128,7 +129,13 @@ const menu = [
 			background-color: #1a1a1a;
 			color: #ffffff;
 		}
-    
+		
+    .logo-container {
+			width: 100%;
+			text-align: left;
+			margin-bottom: 16px;
+		}
+
 		.logo a {
 			color: #ffffff;
       text-decoration: none;
