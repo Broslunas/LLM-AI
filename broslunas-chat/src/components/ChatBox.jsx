@@ -269,30 +269,59 @@ export default function ChatBox() {
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.7); /* Darker background for better contrast */
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            animation: fadeIn 0.3s ease-in-out; /* Smooth fade-in animation */
           }
           .modal-content {
-            background: #000;
-            padding: 20px;
-            border-radius: 8px;
+            background: #1e1e1e; /* Slightly lighter background for modal content */
+            padding: 25px;
+            border-radius: 10px;
             text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Enhanced shadow for depth */
+            max-width: 400px;
+            width: 90%;
+            animation: slideDown 0.3s ease-in-out; /* Slide-down animation */
+          }
+          .modal-content p {
+            color: #f0f0f0; /* Light text color for readability */
+            font-size: 1.2rem;
+            margin-bottom: 20px;
           }
           .modal-content button {
             margin: 10px;
-            padding: 10px 20px;
+            padding: 12px 25px;
             background-color: #e67e22;
             color: #fff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease; /* Smooth hover effect */
           }
           .modal-content button:hover {
-            background-color: #d35400;
+            background-color: #d35400; /* Slightly darker hover color */
+          }
+          @keyframes fadeIn {
+            from {
+              opacity: 0;
+            }
+            to {
+              opacity: 1;
+            }
+          }
+          @keyframes slideDown {
+            from {
+              transform: translateY(-20px);
+              opacity: 0;
+            }
+            to {
+              transform: translateY(0);
+              opacity: 1;
+            }
           }
         `}
       </style>
