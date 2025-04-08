@@ -7,11 +7,34 @@ export default function ChatBox() {
     { sender: "ai", content: "Hola brother, en que puedo ayudarte" },
   ]);
   const [loading, setLoading] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const chatContainerRef = useRef(null);
 
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+    return null;
+  };
+
   const sendMessage = async () => {
+    console.log("Checking login status...");
+    console.log("Current cookies:", document.cookie);
+
+    const loggedInCookie = getCookie("loggedIn");
+    console.log("Value of loggedIn cookie:", loggedInCookie);
+
+    const isLoggedIn = loggedInCookie === "true";
+    console.log("Parsed isLoggedIn:", isLoggedIn);
+
+    if (!isLoggedIn) {
+      console.log("User is not logged in. Showing modal.");
+      setShowModal(true); // Show modal if not logged in
+      return;
+    }
+
+    console.log("User is logged in. Proceeding to send message.");
+
     if (!query.trim()) return;
     setChatHistory((prev) => [...prev, { sender: "user", content: query }]);
     setQuery("");
@@ -26,6 +49,8 @@ export default function ChatBox() {
         .join("\n");
 
       const fullPrompt = `${formattedHistory}\n-- FIN DE LA CONVERSACIÓN\nUSER: ${query}`;
+
+      console.log("Sending message to API with prompt:", fullPrompt);
 
       const res = await fetch("/api/chat", {
         method: "POST",
@@ -49,6 +74,7 @@ export default function ChatBox() {
         }
       }
     } catch (error) {
+      console.error("Error while contacting the AI:", error);
       setChatHistory((prev) => [
         ...prev.slice(0, -1),
         { sender: "ai", content: "Error al contactar con la IA." },
@@ -104,6 +130,17 @@ export default function ChatBox() {
           ➤
         </button>
       </div>
+      {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <p>Debes iniciar sesión para enviar mensajes.</p>
+            <button onClick={() => (window.location.href = "/login")}>
+              Iniciar Sesión
+            </button>
+            <button onClick={() => setShowModal(false)}>Cerrar</button>
+          </div>
+        </div>
+      )}
       <style>
         {`
           .chat-box {
@@ -225,6 +262,37 @@ export default function ChatBox() {
               width: 30px;
               height: 30px;
             }
+          }
+          .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+          }
+          .modal-content {
+            background: #000;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          }
+          .modal-content button {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #e67e22;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+          }
+          .modal-content button:hover {
+            background-color: #d35400;
           }
         `}
       </style>

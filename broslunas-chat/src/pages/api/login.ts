@@ -116,17 +116,26 @@ export async function POST({ request }: { request: Request }) {
     headers.append("Content-Type", "application/json");
     headers.append(
       "Set-Cookie",
-      `loggedIn=true; HttpOnly; Path=/; Max-Age=3600`
+      `loggedIn=true; Path=/; Max-Age=3600; ${
+        process.env.NODE_ENV === "production" ? "Secure;" : ""
+      }`
     );
     headers.append(
       "Set-Cookie",
-      `username=${encodeURIComponent(user.username)}; Path=/; Max-Age=3600`
+      `username=${encodeURIComponent(user.username)}; Path=/; Max-Age=3600; ${
+        process.env.NODE_ENV === "production" ? "Secure;" : ""
+      }`
+    );
+    console.log(
+      "Set-Cookie headers added during login:",
+      headers.get("Set-Cookie")
     );
 
     return new Response(
       JSON.stringify({
         response: "Inicio de sesión exitoso.",
         token,
+        username: user.username, // Include username in the response
       }),
       { status: 200, headers }
     );
