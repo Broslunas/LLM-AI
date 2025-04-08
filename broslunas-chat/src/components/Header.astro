@@ -11,12 +11,12 @@ const menu = [
 	{
 		link: '/login/',
 		label: 'Login',
-    hidden: isLoggedIn
+		hidden: isLoggedIn, // Hide if logged in
 	},
 	{
 		link: '/register/',
 		label: 'Registro',
-    hidden: isLoggedIn
+		hidden: isLoggedIn, // Hide if logged in
 	},
 ];
 ---
@@ -54,13 +54,15 @@ const menu = [
 					</HeaderLink>
 				</div>
 				{
-					menu.map((item) => (
-						<div class='menu-item'>
-							<HeaderLink href={item.link}>
-								{item.label}
-							</HeaderLink>
-						</div>
-					))
+					menu
+						.filter((item) => !item.hidden) // Filter out hidden links
+						.map((item) => (
+							<div class='menu-item'>
+								<HeaderLink href={item.link}>
+									{item.label}
+								</HeaderLink>
+							</div>
+						))
 				}
 			</div>
 		</div>

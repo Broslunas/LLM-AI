@@ -59,12 +59,24 @@ export async function POST({ request }: { request: Request }) {
         expiresIn: "1h",
       });
 
+      // Set cookies with user information
+      const headers = new Headers();
+      headers.append("Content-Type", "application/json");
+      headers.append(
+        "Set-Cookie",
+        `loggedIn=true; HttpOnly; Path=/; Max-Age=3600`
+      );
+      headers.append(
+        "Set-Cookie",
+        `username=${encodeURIComponent(username)}; Path=/; Max-Age=3600`
+      );
+
       return new Response(
         JSON.stringify({
           response: "Usuario registrado con éxito.",
           token,
         }),
-        { status: 201, headers: { "Content-Type": "application/json" } }
+        { status: 201, headers }
       );
     }
 
