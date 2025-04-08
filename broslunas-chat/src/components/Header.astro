@@ -5,8 +5,6 @@ const cookies = parse(Astro.request.headers.get('cookie') || '');
 const isLoggedIn = cookies['loggedIn'] === 'true';
 const isHomePage = Astro.url.pathname === '/';
 
-import HeaderLink from './HeaderLink.astro';
-
 const menu = [
 	{
 		link: '/login/',
