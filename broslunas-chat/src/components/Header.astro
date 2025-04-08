@@ -87,34 +87,34 @@ const menu = [
 	</div>
 
 	<script>
-		document.addEventListener('DOMContentLoaded', () => {
+		window.addEventListener('load', () => {
 			const logoutButton = document.querySelector('.logout-button');
 			const modal = document.getElementById('logout-modal');
 			const confirmLogout = document.getElementById('confirm-logout');
 			const cancelLogout = document.getElementById('cancel-logout');
 
 			if (logoutButton) {
-				logoutButton.addEventListener('click', (e) => {
+				(logoutButton as HTMLButtonElement).onclick = (e: MouseEvent) => {
 					e.preventDefault();
 					if (modal) {
 						modal.classList.remove('hidden');
 					}
-				});
+				};
 			}
 
 			if (confirmLogout) {
-				confirmLogout.addEventListener('click', () => {
+				confirmLogout.onclick = () => {
 					document.cookie = 'loggedIn=false; path=/; max-age=0'; // Clear the cookie
 					window.location.href = '/'; // Redirect to homepage
-				});
+				};
 			}
 
 			if (cancelLogout) {
-				cancelLogout.addEventListener('click', () => {
+				cancelLogout.onclick = () => {
 					if (modal) {
 						modal.classList.add('hidden');
 					}
-				});
+				};
 			}
 		});
 	</script>
