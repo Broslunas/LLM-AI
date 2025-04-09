@@ -27,7 +27,6 @@ const menu = [
 					<h2 class='logo'>
 						<a href='/'>
 							<img src='https://cdn.broslunas.com/favicon.png' alt='Broslunas Logo' class='logo-image' />
-							Broslunas Chat
 						</a>
 					</h2>
 				</div>
@@ -67,9 +66,9 @@ const menu = [
 				}
 				{isLoggedIn && (
 					<div class='menu-item'>
-						<a class='logout-button'>
-							Cerrar sesión
-						</a>
+							<a href="#" class='logout-button' aria-label="Cerrar sesión">
+								Cerrar sesión
+							</a>
 					</div>
 				)}
 			</div>
@@ -87,34 +86,34 @@ const menu = [
 	</div>
 
 	<script>
-		window.addEventListener('load', () => {
+		window.addEventListener('DOMContentLoaded', () => {
 			const logoutButton = document.querySelector('.logout-button');
 			const modal = document.getElementById('logout-modal');
 			const confirmLogout = document.getElementById('confirm-logout');
 			const cancelLogout = document.getElementById('cancel-logout');
 
 			if (logoutButton) {
-				(logoutButton as HTMLButtonElement).onclick = (e: MouseEvent) => {
+				logoutButton.addEventListener('click', (e) => {
 					e.preventDefault();
 					if (modal) {
 						modal.classList.remove('hidden');
 					}
-				};
+				});
 			}
 
 			if (confirmLogout) {
-				confirmLogout.onclick = () => {
+				confirmLogout.addEventListener('click', () => {
 					document.cookie = 'loggedIn=false; path=/; max-age=0'; // Clear the cookie
 					window.location.href = '/'; // Redirect to homepage
-				};
+				});
 			}
 
 			if (cancelLogout) {
-				cancelLogout.onclick = () => {
+				cancelLogout.addEventListener('click', () => {
 					if (modal) {
 						modal.classList.add('hidden');
 					}
-				};
+				});
 			}
 		});
 	</script>
@@ -208,7 +207,7 @@ const menu = [
 		}
 
 		.logo-image {
-			height: 1em;
+			height: 2em;
 			margin-right: 8px;
 		}
 
