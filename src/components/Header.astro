@@ -27,67 +27,51 @@ const menu = [
 					<h2 class='logo'>
 						<a href='/'>
 							<img src='https://cdn.broslunas.com/favicon.png' alt='Broslunas Logo' class='logo-image' />
+							Broslunas Chat
 						</a>
 					</h2>
 				</div>
 			)}
 		</nav>
-		<div class='menu-container'>
-			<div class='menu'>
-				<div class='menu-item'>
-					<a href='/' aria-label='Home'>
-						<svg
-							xmlns='http://www.w3.org/2000/svg'
-							width='20'
-							height='20'
-							viewBox='0 0 24 24'
-							fill='none'
-							stroke='currentColor'
-							stroke-width='1.7'
-							stroke-linecap='round'
-							stroke-linejoin='round'
-							class='lucide lucide-house'
-						>
-							<path d='M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8'></path>
-							<path d='M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'></path>
-						</svg>
-					</a>
+		{!isLoggedIn && (
+			<div class='menu-container'>
+				<div class='menu'>
+					
+						<div class='menu-item'>
+							<a href='/' aria-label='Home'>
+								<svg
+									xmlns='http://www.w3.org/2000/svg'
+									width='20'
+									height='20'
+									viewBox='0 0 24 24'
+									fill='none'
+									stroke='currentColor'
+									stroke-width='1.7'
+									stroke-linecap='round'
+									stroke-linejoin='round'
+									class='lucide lucide-house'
+								>
+									<path d='M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8'></path>
+									<path d='M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'></path>
+								</svg>
+							</a>
+						</div>
+					
+					{
+						menu
+							.filter((item) => !item.hidden) 
+							.map((item) => (
+								<div class='menu-item'>
+									<a href={item.link}>
+										{item.label}
+									</a>
+								</div>
+							))
+						}
 				</div>
-				{
-					menu
-						.filter((item) => !item.hidden) 
-						.map((item) => (
-							<div class='menu-item'>
-								<a href={item.link}>
-									{item.label}
-								</a>
-							</div>
-						))
-				}
-				{isLoggedIn && (
-					<div class='menu-item'>
-						<a href="#" class='logout-button' aria-label="Cerrar sesión">
-							Cerrar sesión
-						</a>
-					</div>
-				)}
 			</div>
-		</div>
+		)}
 	</div>
-
-	<script>
-		window.addEventListener('DOMContentLoaded', () => {
-			const logoutButton = document.querySelector('.logout-button');
-
-			if (logoutButton) {
-				logoutButton.addEventListener('click', (e) => {
-					e.preventDefault();
-					document.cookie = 'loggedIn=false; path=/; max-age=0'; // Clear the cookie
-					window.location.href = '/'; // Redirect to homepage
-				});
-			}
-		});
-	</script>
 
 	<style is:global>
 
