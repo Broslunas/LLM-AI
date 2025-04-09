@@ -342,7 +342,8 @@ export default function ChatBox() {
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 1rem;: 2px solid #e67e22;
+            font-family: "Minecraft Title", sans-serif;
             transition: background-color 0.3s ease;
           }
           .modal-content button:hover {
