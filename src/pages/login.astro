@@ -22,6 +22,7 @@ if (isLoggedIn) {
     <div class="form-container">
       <form id="loginForm" method="POST">
         <h2>Iniciar Sesión</h2>
+        <div id="errorMessage" style="color: red; display: none; margin-bottom: 10px;"></div>
         <div class="input-group">
           <span class="icon"><i class="fas fa-user"></i></span>
           <input name="username" type="text" placeholder="Usuario" required />
@@ -49,6 +50,9 @@ if (isLoggedIn) {
         password: formData.get("password"),
       };
 
+      const errorMessage = document.getElementById("errorMessage");
+      if (errorMessage) errorMessage.style.display = "none";
+
       try {
         const response = await fetch("/api/auth/login", {
           method: "POST",
@@ -62,11 +66,18 @@ if (isLoggedIn) {
           document.cookie = `username=${data.username}; path=/;`;
           window.location.href = "/";
         } else {
-          alert("Invalid username or password.");
+          const errorData = await response.json();
+          if (errorMessage) {
+            errorMessage.textContent = errorData.response || "Invalid username or password.";
+            errorMessage.style.display = "block";
+          }
         }
       } catch (error) {
         console.error("Error:", error);
-        alert("Failed to login.");
+        if (errorMessage) {
+          errorMessage.textContent = "Failed to login.";
+          errorMessage.style.display = "block";
+        }
       }
     }
 

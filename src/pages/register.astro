@@ -29,9 +29,10 @@ if (isLoggedIn) {
     <div class="form-container">
       <form id="registerForm" method="POST">
         <h2>Registro</h2>
+        <div id="errorMessage" style="color: red; display: none; margin-bottom: 10px;"></div>
         <div class="input-group">
           <span class="icon"><i class="fas fa-user"></i></span>
-          <input name="username" type="text" placeholder=Usuario required />
+          <input name="username" type="text" placeholder="Usuario" required />
         </div>
         <div class="input-group">
           <span class="icon"><i class="fas fa-envelope"></i></span>
@@ -55,23 +56,34 @@ if (isLoggedIn) {
         password: formData.get('password'),
       };
 
+      const errorMessage = document.getElementById("errorMessage");
+      if (errorMessage) errorMessage.style.display = "none";
+
       try {
         const response = await fetch('/api/auth/register', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(user),
         });
+
         if (response.ok) {
           const data = await response.json();
           document.cookie = `loggedIn=true; path=/;`;
           document.cookie = `username=${data.username}; path=/;`;
-          window.location.href = "/"; // Redirect to the homepage
+          window.location.href = "/";
         } else {
-          alert('Failed to register user.');
+          const errorData = await response.json();
+          if (errorMessage) {
+            errorMessage.textContent = errorData.response || "Failed to register user.";
+            errorMessage.style.display = "block";
+          }
         }
       } catch (error) {
         console.error('Error:', error);
-        alert('Failed to register user.');
+        if (errorMessage) {
+          errorMessage.textContent = "Failed to register user.";
+          errorMessage.style.display = "block";
+        }
       }
     }
 
