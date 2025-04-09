@@ -6,7 +6,6 @@ export const prerender = false;
 ---
 <MainLayout>
   <ChatBox client:load />
-  <br>
   <style>
     body {
       background-color: #1a1a1a;
@@ -14,6 +13,10 @@ export const prerender = false;
       margin: 0;
       font-family: Arial, sans-serif;
       line-height: 1.6;
+      overflow-x: hidden; /* Prevent horizontal scrolling */
+    }
+    MainLayout {
+      padding: 5px 0; /* Further reduce vertical padding */
     }
   </style>
 </MainLayout>

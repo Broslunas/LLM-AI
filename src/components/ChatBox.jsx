@@ -136,13 +136,13 @@ export default function ChatBox() {
             background-color: #3a3a3a;
             padding: 15px;
             border-radius: 8px;
-            width: 60%;
-            height: 400px;
-            margin: 20px auto;
+            width: 70%;
+            height: 60vh; /* Adjust height dynamically */
+            margin: 5px auto;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             display: flex;
             flex-direction: column;
-            font-family: 'Roboto', sans-serif; /* Changed font family */
+            font-family: 'Roboto', sans-serif;
           }
           .chat-history {
             flex: 1;
@@ -151,7 +151,7 @@ export default function ChatBox() {
             background-color: #2a2a2a;
             border-radius: 5px;
             border: 1px solid #444;
-            font-size: 1.2rem; /* Increased font size */
+            font-size: 1.2rem;
           }
           .message {
             margin: 5px 0;
@@ -168,8 +168,8 @@ export default function ChatBox() {
             border-radius: 12px;
             max-width: 80%;
             word-wrap: break-word;
-            font-size: 1.2rem; /* Increased font size */
-            min-height: 35px; /* Ensures consistent height */
+            font-size: 1.2rem;
+            min-height: 35px;
           }
           .message.user .message-content {
             background-color: #e67e22;
@@ -206,22 +206,22 @@ export default function ChatBox() {
             border-radius: 5px;
             padding: 10px;
             resize: none;
-            font-size: 1.4rem; /* Increased font size */
-            font-family: 'Roboto', sans-serif; /* Changed font family */
+            font-size: 1.4rem;
+            font-family: 'Roboto', sans-serif;
           }
           .chat-input button {
             background-color: #e67e22;
             color: #fff;
             border: none;
             padding: 10px;
-            border-radius: 50%;
+            border-radius: 35%;
             cursor: pointer;
-            width: 35px;
-            height: 35px;
+            width: 50px;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem; /* Increased font size */
+            font-size: 1.5rem;
           }
           .chat-input button:disabled {
             background-color: #777;
@@ -235,22 +235,31 @@ export default function ChatBox() {
               transform: rotate(360deg);
             }
           }
+          @media (max-width: 1024px) {
+            .chat-box {
+              width: 80%;
+              height: 60vh; /* Adjust height for medium screens */
+            }
+          }
           @media (max-width: 768px) {
             .chat-box {
               width: 90%;
-              height: 300px;
+              height: 70vh; /* Adjust height for smaller screens */
             }
           }
           @media (max-width: 480px) {
             .chat-box {
-              height: 250px;
+              width: 100%;
+              height: 80vh; /* Adjust height for very small screens */
+              padding: 10px;
             }
             .chat-input textarea {
-              height: 30px;
+              font-size: 1.2rem; /* Adjust font size for smaller screens */
             }
             .chat-input button {
               width: 30px;
               height: 30px;
+              font-size: 1rem;
             }
           }
           .modal {
@@ -259,25 +268,25 @@ export default function ChatBox() {
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7); /* Darker background for better contrast */
+            background: rgba(0, 0, 0, 0.7);
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
-            animation: fadeIn 0.3s ease-in-out; /* Smooth fade-in animation */
+            animation: fadeIn 0.3s ease-in-out;
           }
           .modal-content {
-            background: #1e1e1e; /* Slightly lighter background for modal content */
+            background: #1e1e1e;
             padding: 25px;
             border-radius: 10px;
             text-align: center;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Enhanced shadow for depth */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
             max-width: 400px;
             width: 90%;
-            animation: slideDown 0.3s ease-in-out; /* Slide-down animation */
+            animation: slideDown 0.3s ease-in-out;
           }
           .modal-content p {
-            color: #f0f0f0; /* Light text color for readability */
+            color: #f0f0f0;
             font-size: 1.2rem;
             margin-bottom: 20px;
           }
@@ -290,10 +299,10 @@ export default function ChatBox() {
             border-radius: 5px;
             cursor: pointer;
             font-size: 1rem;
-            transition: background-color 0.3s ease; /* Smooth hover effect */
+            transition: background-color 0.3s ease;
           }
           .modal-content button:hover {
-            background-color: #d35400; /* Slightly darker hover color */
+            background-color: #d35400;
           }
           @keyframes fadeIn {
             from {
