@@ -132,6 +132,10 @@ export default function ChatBox() {
       )}
       <style>
         {`
+          @font-face {
+            font-family: "Minecraft";
+            src: url("/minecraft.ttf") format("truetype");
+          }
           .chat-box {
             background-color: #3a3a3a;
             padding: 15px;
@@ -142,7 +146,7 @@ export default function ChatBox() {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             display: flex;
             flex-direction: column;
-            font-family: 'Roboto', sans-serif;
+            font-family: "Tienne", serif;
           }
           .chat-history {
             flex: 1;
@@ -183,11 +187,13 @@ export default function ChatBox() {
             min-height: 35px;
           }
           .message.user .message-content {
+            font-family: "Minecraft", sans-serif; /* Aplicar la fuente a los mensajes del usuario */
             background-color: #e67e22;
             color: #fff;
             animation: bounceMessage 0.3s ease-in-out forwards;
           }
           .message.ai .message-content {
+            font-family: "Minecraft", sans-serif; /* Aplicar la fuente a los mensajes del chatbot */
             background-color: #444;
             color: #fff;
             animation: pulseMessage 1.5s infinite ease-in-out;
@@ -240,6 +246,7 @@ export default function ChatBox() {
             border-top: 1px solid #444;
           }
           .chat-input textarea {
+            font-family: "Minecraft", sans-serif; /* Aplicar la fuente al textarea */
             flex: 1;
             height: 35px;
             background-color: #444;
@@ -249,7 +256,6 @@ export default function ChatBox() {
             padding: 10px;
             resize: none;
             font-size: 1.4rem;
-            font-family: 'Roboto', sans-serif;
           }
           .chat-input button {
             background-color: #e67e22;
