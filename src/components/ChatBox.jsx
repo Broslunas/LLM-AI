@@ -132,10 +132,6 @@ export default function ChatBox() {
       )}
       <style>
         {`
-          @font-face {
-            font-family: "Minecraft";
-            src: url("/minecraft.ttf") format("truetype");
-          }
           .chat-box {
             background-color: #3a3a3a;
             padding: 15px;
@@ -146,7 +142,7 @@ export default function ChatBox() {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             display: flex;
             flex-direction: column;
-            font-family: "Tienne", serif;
+            font-family: "Minecraft Title", sans-serif;
           }
           .chat-history {
             flex: 1;

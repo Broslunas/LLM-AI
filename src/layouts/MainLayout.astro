@@ -21,5 +21,15 @@ const { title } = Astro.props;
       <slot />
     </main>
     <Footer />
+    <style>
+          @font-face {
+            font-family: "Minecraft";
+            src: url("/minecraft.ttf") format("truetype");
+          }
+          @font-face {
+            font-family: "Minecraft Title";
+            src: url("/minecraft-titles.ttf") format("truetype");
+          }
+    </style>
   </body>
 </html>
