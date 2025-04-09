@@ -5,6 +5,8 @@ const cookies = parse(Astro.request.headers.get('cookie') || '');
 const isLoggedIn = cookies['loggedIn'] === 'true';
 const isHomePage = Astro.url.pathname === '/';
 
+const logo = 'https://cdn.broslunas.com/favicon.png';
+
 const menu = [
 	{
 		link: '/login/',
@@ -26,7 +28,7 @@ const menu = [
 				<div class='logo-container'>
 					<h2 class='logo'>
 						<a href='/'>
-							<img src='https://cdn.broslunas.com/favicon.png' alt='Broslunas Logo' class='logo-image' />
+							<img src={logo} alt='Broslunas Logo' class='logo-image' />
 							Broslunas Chat
 						</a>
 					</h2>
@@ -36,7 +38,7 @@ const menu = [
 			<div class='centered-title'>
 				<h2 class='logo'>
 					<a href="/">
-						<img src='https://cdn.broslunas.com/favicon.png' alt='Broslunas Logo' class='logo-image' />
+						<img src={logo} alt='Broslunas Logo' class='logo-image' />
 						Broslunas Chat
 					</a>
 				</h2>
