@@ -19,11 +19,6 @@ if (MONGO_URI.includes(",")) {
   );
 }
 
-console.log(
-  "Connecting to MongoDB with URI:",
-  MONGO_URI.replace(/:\/\/.*@/, "://<credentials-hidden>@")
-);
-
 const client = new MongoClient(MONGO_URI);
 
 export const prerender = false;
@@ -125,10 +120,6 @@ export async function POST({ request }: { request: Request }) {
       `username=${encodeURIComponent(user.username)}; Path=/; Max-Age=3600; ${
         process.env.NODE_ENV === "production" ? "Secure;" : ""
       }`
-    );
-    console.log(
-      "Set-Cookie headers added during login:",
-      headers.get("Set-Cookie")
     );
 
     return new Response(

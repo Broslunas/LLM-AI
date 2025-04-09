@@ -71,7 +71,7 @@ export async function POST({ request }) {
       },
     });
   } catch (error) {
-    console.error("Error en la llamada a DeepSeek:", error);
+    console.error("Error en la llamada a la API:", error);
     return new Response("Error al procesar la solicitud.", { status: 500 });
   }
 }

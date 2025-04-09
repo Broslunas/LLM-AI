@@ -74,10 +74,6 @@ export async function POST({ request }: { request: Request }) {
           process.env.NODE_ENV === "production" ? "Secure;" : ""
         }`
       );
-      console.log(
-        "Set-Cookie headers added during registration:",
-        headers.get("Set-Cookie")
-      );
 
       return new Response(
         JSON.stringify({

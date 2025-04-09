@@ -4,7 +4,7 @@ import ReactMarkdown from "react-markdown";
 export default function ChatBox() {
   const [query, setQuery] = useState("");
   const [chatHistory, setChatHistory] = useState([
-    { sender: "ai", content: "Hola brother, en que puedo ayudarte" },
+    { sender: "ai", content: "Hola Minecrafter, que te cuentas" },
   ]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -18,22 +18,13 @@ export default function ChatBox() {
   };
 
   const sendMessage = async () => {
-    console.log("Checking login status...");
-    console.log("Current cookies:", document.cookie);
-
     const loggedInCookie = getCookie("loggedIn");
-    console.log("Value of loggedIn cookie:", loggedInCookie);
-
     const isLoggedIn = loggedInCookie === "true";
-    console.log("Parsed isLoggedIn:", isLoggedIn);
 
     if (!isLoggedIn) {
-      console.log("User is not logged in. Showing modal.");
-      setShowModal(true); // Show modal if not logged in
+      setShowModal(true);
       return;
     }
-
-    console.log("User is logged in. Proceeding to send message.");
 
     if (!query.trim()) return;
     setChatHistory((prev) => [...prev, { sender: "user", content: query }]);
@@ -49,8 +40,6 @@ export default function ChatBox() {
         .join("\n");
 
       const fullPrompt = `${formattedHistory}\n-- FIN DE LA CONVERSACIÓN\nUSER: ${query}`;
-
-      console.log("Sending message to API with prompt:", fullPrompt);
 
       const res = await fetch("/api/chat", {
         method: "POST",
