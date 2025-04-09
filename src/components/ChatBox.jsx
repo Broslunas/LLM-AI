@@ -165,6 +165,7 @@ export default function ChatBox() {
           }
           .message {
             margin: 5px 0;
+            animation: fadeInMessage 0.5s ease-in-out forwards;
           }
           .message.user {
             text-align: right;
@@ -184,10 +185,41 @@ export default function ChatBox() {
           .message.user .message-content {
             background-color: #e67e22;
             color: #fff;
+            animation: bounceMessage 0.3s ease-in-out forwards;
           }
           .message.ai .message-content {
             background-color: #444;
             color: #fff;
+            animation: pulseMessage 1.5s infinite ease-in-out;
+          }
+          @keyframes fadeInMessage {
+            0% {
+              opacity: 0;
+              transform: translateY(10px);
+            }
+            100% {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+          @keyframes bounceMessage {
+            0%, 100% {
+              transform: scale(1);
+            }
+            50% {
+              transform: scale(1.05);
+            }
+          }
+          @keyframes pulseMessage {
+            0% {
+              opacity: 0.8;
+            }
+            50% {
+              opacity: 1;
+            }
+            100% {
+              opacity: 0.8;
+            }
           }
           .spinner {
             display: inline-block;
