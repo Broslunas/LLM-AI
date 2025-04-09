@@ -21,9 +21,9 @@ if (isLoggedIn) {
 <MainLayout>
   <form id="registerForm">
       <h2>Registro</h2>
-      <input name="username" type="text" placeholder="Username" required />
+      <input name="username" type="text" placeholder="Usuario" required />
       <input name="email" type="email" placeholder="Email" required />
-      <input name="password" type="password" placeholder="Password" required />
+      <input name="password" type="password" placeholder="Contraseña" required />
       <button type="submit">Registrate</button>
     </form>
     <script>
@@ -64,67 +64,71 @@ if (isLoggedIn) {
       }
     </script>
   <style>
-        body {
-          background-color: #1a1a1a;
-          color: #f0f0f0;
-          font-family: Arial, sans-serif;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 100vh;
-          margin: 0;
-        }
-        form {
-          background-color: #333333;
-          padding: 20px;
-          border-radius: 5px;
-          width: 300px;
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-          display: flex;
-          flex-direction: column;
-          align-items: center; /* Center inputs horizontally */
-        }
-        input {
-          width: 90%; /* Adjusted width */
-          padding: 10px;
-          margin-bottom: 10px;
-          border: 1px solid #555555;
-          border-radius: 5px;
-          background-color: #2a2a2a;
-          color: #f0f0f0;
-        }
-        button {
-          width: 90%; /* Adjusted width */
-          padding: 10px;
-          background-color: #e67e22;
-          border: none;
-          border-radius: 5px;
-          color: #ffffff;
-          cursor: pointer;
-        }
-        button:hover {
-          background-color: #d35400;
-        }
-        @media (max-width: 768px) {
-          form {
-            width: 90%;
-            padding: 15px;
-          }
-          input {
-            padding: 8px;
-          }
-          button {
-            padding: 8px;
-          }
-        }
-        @media (max-width: 480px) {
-          h2 {
-            font-size: 1.5rem;
-          }
-          form {
-            width: 100%;
-            padding: 10px;
-          }
-        }
-      </style>
+    body {
+      background-color: #1a1a1a;
+      color: #f0f0f0;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    form {
+      margin: 50px auto; /* Add margin to move the form down */
+      background-color: #333333;
+      padding: 20px;
+      border-radius: 5px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* Center inputs horizontally */
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #555555;
+      border-radius: 5px;
+      background-color: #2a2a2a;
+      color: #f0f0f0;
+    }
+    input:focus {
+      outline: 2px solid #e67e22; /* Add orange outline on focus */
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #e67e22;
+      border: none;
+      border-radius: 5px;
+      color: #ffffff;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    button:hover {
+      background-color: #d35400;
+    }
+    @media (max-width: 768px) {
+      form {
+        padding: 15px;
+      }
+      input, button {
+        padding: 8px;
+      }
+    }
+    @media (max-width: 480px) {
+      h2 {
+        font-size: 1.5rem;
+      }
+      form {
+        padding: 10px;
+      }
+    }
+  </style>
 </MainLayout>
