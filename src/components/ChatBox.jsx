@@ -153,6 +153,16 @@ export default function ChatBox() {
             border: 1px solid #444;
             font-size: 1.2rem;
           }
+          .chat-history::-webkit-scrollbar {
+            width: 8px;
+          }
+          .chat-history::-webkit-scrollbar-thumb {
+            background-color: #e67e22;
+            border-radius: 4px;
+          }
+          .chat-history::-webkit-scrollbar-thumb:hover {
+            background-color: #d35400;
+          }
           .message {
             margin: 5px 0;
           }
