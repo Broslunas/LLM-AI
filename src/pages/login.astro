@@ -18,13 +18,27 @@ if (isLoggedIn) {
 }
 ---
 <MainLayout>
-  <div class="form-container">
-    <form id="loginForm" method="POST">
-        <h2>Login</h2>
-        <input name="username" type="text" placeholder="Usuario" required />
-        <input name="password" type="password" placeholder="Contraseña" required />
+  <div class="container">
+    <div class="form-container">
+      <form id="loginForm" method="POST">
+        <h2>Iniciar Sesión</h2>
+        <div class="input-group">
+          <span class="icon"><i class="fas fa-user"></i></span>
+          <input name="username" type="text" placeholder="Usuario" required />
+        </div>
+        <div class="input-group">
+          <span class="icon"><i class="fas fa-lock"></i></span>
+          <input name="password" type="password" placeholder="Contraseña" required />
+        </div>
         <button type="submit">Login</button>
-    </form>
+      </form>
+    </div>
+    <div class="divider"></div>
+    <div class="info-container">
+      <h1>¿Nuevo aquí?</h1>
+      <p>Regístrate para acceder a todas las funcionalidades.</p>
+      <button onclick="window.location.href='/register'">Registro</button>
+    </div>
   </div>
   <script>
     async function handleLogin(event: SubmitEvent) {
@@ -73,38 +87,68 @@ if (isLoggedIn) {
       flex-direction: column;
       min-height: 100vh;
     }
-    .form-container {
-      margin: 50px auto; /* Add margin to move the form down */
+    .container {
       display: flex;
       justify-content: center;
-      align-items: flex-start; /* Align form to the top */
-    }
-    form {
+      align-items: flex-start;
+      gap: 0;
+      margin: 50px auto;
+      max-width: 800px;
+      position: relative;
       background-color: #333333;
-      padding: 20px;
       border-radius: 5px;
-      width: 100%;
-      max-width: 400px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+    .form-container, .info-container {
+      flex: 1;
+      padding: 20px;
       display: flex;
       flex-direction: column;
-      align-items: center; /* Center inputs horizontally */
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .divider {
+      width: 2px;
+      background-color: #444444;
+      height: auto;
+      margin: 0 10px;
+    }
+    form {
+      width: 100%;
+      max-width: 400px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     h2 {
       text-align: center;
       margin-bottom: 20px;
     }
-    input {
+    .input-group {
+      position: relative;
       width: 100%;
-      padding: 10px;
       margin-bottom: 15px;
+    }
+    .input-group .icon {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      transform: translateY(-50%);
+      font-size: 1.2rem;
+      color: #e67e22;
+    }
+    .input-group input {
+      width: 100%;
+      padding: 10px 10px 10px 35px; /* Add padding to make space for the icon */
       border: 1px solid #555555;
       border-radius: 5px;
       background-color: #2a2a2a;
       color: #f0f0f0;
+      box-sizing: border-box;
     }
-    input:focus {
-      outline: 2px solid #e67e22; /* Add orange outline on focus */
+    .input-group input:focus {
+      outline: 2px solid #e67e22;
     }
     button {
       width: 100%;
@@ -115,11 +159,34 @@ if (isLoggedIn) {
       color: #ffffff;
       cursor: pointer;
       font-size: 1rem;
+      transition: background-color 0.3s ease, transform 0.2s ease;
     }
     button:hover {
       background-color: #d35400;
+      transform: scale(1.05);
+    }
+    .info-container button {
+      padding: 10px 20px;
+      background-color: #e67e22;
+      border: none;
+      border-radius: 5px;
+      color: #ffffff;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .info-container button:hover {
+      background-color: #d35400;
+      transform: scale(1.05);
     }
     @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .divider {
+        display: none;
+      }
       form {
         padding: 15px;
       }
