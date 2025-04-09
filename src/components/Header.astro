@@ -66,21 +66,11 @@ const menu = [
 				}
 				{isLoggedIn && (
 					<div class='menu-item'>
-							<a href="#" class='logout-button' aria-label="Cerrar sesión">
-								Cerrar sesión
-							</a>
+						<a href="#" class='logout-button' aria-label="Cerrar sesión">
+							Cerrar sesión
+						</a>
 					</div>
 				)}
-			</div>
-		</div>
-	</div>
-
-	<div id="logout-modal" class="modal hidden">
-		<div class="modal-content">
-			<p>¿Seguro quieres cerrar sesión?</p>
-			<div class="modal-actions">
-				<button id="confirm-logout" class="confirm-button">Sí</button>
-				<button id="cancel-logout" class="cancel-button">No</button>
 			</div>
 		</div>
 	</div>
@@ -88,27 +78,13 @@ const menu = [
 	<script>
 		window.addEventListener('DOMContentLoaded', () => {
 			const logoutButton = document.querySelector('.logout-button');
-			const modal = document.getElementById('logout-modal');
-			const confirmLogout = document.getElementById('confirm-logout');
-			const cancelLogout = document.getElementById('cancel-logout');
 
-			// Ensure elements exist before adding event listeners
-			if (logoutButton && modal && confirmLogout && cancelLogout) {
+			if (logoutButton) {
 				logoutButton.addEventListener('click', (e) => {
 					e.preventDefault();
-					modal.classList.remove('hidden'); // Show the modal
-				});
-
-				confirmLogout.addEventListener('click', () => {
 					document.cookie = 'loggedIn=false; path=/; max-age=0'; // Clear the cookie
 					window.location.href = '/'; // Redirect to homepage
 				});
-
-				cancelLogout.addEventListener('click', () => {
-					modal.classList.add('hidden'); // Hide the modal
-				});
-			} else {
-				console.error('One or more modal elements are missing in the DOM.');
 			}
 		});
 	</script>
@@ -245,61 +221,7 @@ const menu = [
 		}
 
 		.modal {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			height: 100%;
-			background: rgba(0, 0, 0, 0.5);
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			z-index: 1000;
-		}
-
-		.modal.hidden {
-			display: none;
-		}
-
-		.modal-content {
-			background: #ffffff;
-			padding: 20px;
-			border-radius: 8px;
-			text-align: center;
-			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-		}
-
-		.modal-actions {
-			margin-top: 20px;
-			display: flex;
-			justify-content: space-around;
-		}
-
-		.confirm-button,
-		.cancel-button {
-			padding: 10px 20px;
-			border: none;
-			border-radius: 4px;
-			cursor: pointer;
-			font-size: 1rem;
-		}
-
-		.confirm-button {
-			background-color: #ff8c42;
-			color: #ffffff;
-		}
-
-		.confirm-button:hover {
-			background-color: #e67e3a;
-		}
-
-		.cancel-button {
-			background-color: #cccccc;
-			color: #333333;
-		}
-
-		.cancel-button:hover {
-			background-color: #b3b3b3;
+			display: none; /* Remove modal styles */
 		}
 	</style>
 
