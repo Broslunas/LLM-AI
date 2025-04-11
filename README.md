@@ -12,7 +12,7 @@
 
 1. Clona este repositorio:
    ```bash
-   git clone https://github.com/tu-usuario/LLM-AI.git
+   git clone https://github.com/broslunas/chat-ai.git
    ```
 2. Instala las dependencias:
    ```bash
@@ -53,9 +53,5 @@
    git push origin mi-nueva-funcionalidad
    ```
 5. Abre un pull request en este repositorio.
-
-## Licencia
-
-Este proyecto está bajo la licencia [MIT](LICENSE).
 
 ¡Gracias por ser parte de este proyecto!
