@@ -35,6 +35,12 @@ import MainLayout from "@/layouts/MainLayout.astro";
           <p class="stat-label">Total de Mensajes:</p>
           <p class="stat-value" id="totalMessages">Cargando...</p>
         </div>
+      </div> <br>
+      <div class="stats-section">
+        <h2>Top Usuarios por Mensajes</h2>
+        <div id="topUsers" class="top-users">
+          <p>Cargando...</p>
+        </div>
       </div>
     </div>
   </div>
@@ -46,6 +52,7 @@ import MainLayout from "@/layouts/MainLayout.astro";
     const totalMessagesElement = document.getElementById("totalMessages");
     const userStatsContainer = document.getElementById("userStatsContainer");
     const divider = document.getElementById("divider");
+    const topUsersElement = document.getElementById("topUsers");
 
     function getCookie(name: string): string | null {
       const value = `; ${document.cookie}`;
@@ -97,6 +104,21 @@ import MainLayout from "@/layouts/MainLayout.astro";
           if (userMessagesElement) {
             userMessagesElement.textContent = stats.userMessages || 0;
           }
+        }
+
+        // Update top users
+        if (topUsersElement) {
+          topUsersElement.innerHTML = stats.topUsers
+            .map(
+              (user: { username: string; messageCount: number }, index: number) => `
+                <div class="top-user">
+                  <p class="rank">#${index + 1}</p>
+                  <p class="username">${user.username || "Desconocido"}</p>
+                  <p class="messages">${user.messageCount || 0} mensajes</p>
+                </div>
+              `
+            )
+            .join("") || "<p>No hay datos disponibles.</p>";
         }
       } catch (err) {
         console.error("Error fetching stats:", err);
@@ -212,6 +234,40 @@ import MainLayout from "@/layouts/MainLayout.astro";
       .stat-row {
         flex-direction: column;
       }
+    }
+    .top-users {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 20px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .top-user {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-color: #444444;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+    .rank {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #e67e22;
+      margin-bottom: 10px;
+    }
+    .username {
+      font-size: 1.2rem;
+      color: #f0f0f0;
+      margin-bottom: 10px;
+    }
+    .messages {
+      font-size: 1rem;
+      font-weight: bold;
+      color: #e67e22;
     }
   </style>
 </MainLayout>

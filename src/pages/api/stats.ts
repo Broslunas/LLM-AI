@@ -26,6 +26,12 @@ export async function POST({ request }: { request: Request }) {
       .aggregate([{ $group: { _id: null, total: { $sum: "$messageCount" } } }])
       .toArray();
 
+    const topUsers = await usersCollection
+      .find({}, { projection: { username: 1, messageCount: 1 } })
+      .sort({ messageCount: -1 })
+      .limit(5)
+      .toArray();
+
     let userStats = {
       username: "Desconocido",
       email: "Desconocido",
@@ -47,6 +53,10 @@ export async function POST({ request }: { request: Request }) {
         ...userStats,
         totalUsers,
         totalMessages: totalMessages[0]?.total || 0,
+        topUsers: topUsers.map((user) => ({
+          username: user.username,
+          messageCount: user.messageCount || 0,
+        })),
       }),
       { status: 200, headers: { "Content-Type": "application/json" } }
     );
