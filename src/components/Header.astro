@@ -18,6 +18,11 @@ const menu = [
 		label: 'Registro',
 		hidden: isLoggedIn, // Hide if logged in
 	},
+	{
+		link: '/stats/',
+		label: 'Estadísticas',
+		// Removed hidden property to always display this item
+	},
 ];
 ---
 
@@ -44,7 +49,7 @@ const menu = [
 				</h2>
 			</div>
 		)}
-		{isHomePage && !isLoggedIn && (
+		{isHomePage && (
 			<div class='menu-container'>
 				<div class='menu'>
 					{menu
