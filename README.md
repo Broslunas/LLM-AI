@@ -1,48 +1,61 @@
-# Astro Starter Kit: Basics
+# Chat con IA sobre Minecraft
 
-```sh
-pnpm create astro@latest -- --template basics
-```
+¡Bienvenido al proyecto de **Chat con IA sobre Minecraft**! Este proyecto utiliza **Astro** para crear una experiencia interactiva y única, con fuentes inspiradas en Minecraft, para los fanáticos del juego.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+## Características
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+- Chat impulsado por inteligencia artificial.
+- Interfaz con diseño inspirado en Minecraft.
+- Construido con **Astro**, un framework moderno para sitios web rápidos y dinámicos.
 
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
+## Instalación
 
-## 🚀 Project Structure
+1. Clona este repositorio:
+   ```bash
+   git clone https://github.com/tu-usuario/LLM-AI.git
+   ```
+2. Instala las dependencias:
+   ```bash
+   npm install
+   ```
+3. Configura los archivos `.env` necesarios. Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
 
-Inside of your Astro project, you'll see the following folders and files:
+   ```env
+   MONGO_URI=""
+   JWT_SECRET=""
+   DEEPSEEK_API_KEY=""
+   ```
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+   - **MONGO_URI**: Crea una base de datos en MongoDB y utiliza la URI de conexión proporcionada.
+   - **JWT_SECRET**: Genera un secreto JWT en [jwtsecret.com](https://jwtsecret.com/generate).
+   - **DEEPSEEK_API_KEY**: Obtén tu clave API en [DeepSeek Platform](https://platform.deepseek.com/api_keys).
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+4. Inicia el servidor de desarrollo:
+   ```bash
+   npm run dev
+   ```
 
-## 🧞 Commands
+## Cómo colaborar
 
-All commands are run from the root of the project, from a terminal:
+¡Nos encantaría que contribuyas a este proyecto! Sigue estos pasos para colaborar:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+1. Haz un fork del repositorio.
+2. Crea una rama para tu funcionalidad o corrección de errores:
+   ```bash
+   git checkout -b mi-nueva-funcionalidad
+   ```
+3. Realiza tus cambios y haz un commit:
+   ```bash
+   git commit -m "Añadida nueva funcionalidad"
+   ```
+4. Sube tus cambios a tu fork:
+   ```bash
+   git push origin mi-nueva-funcionalidad
+   ```
+5. Abre un pull request en este repositorio.
 
-## 👀 Want to learn more?
+## Licencia
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Este proyecto está bajo la licencia [MIT](LICENSE).
+
+¡Gracias por ser parte de este proyecto!
