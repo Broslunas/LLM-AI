@@ -4,18 +4,17 @@ export const prerender = false;
 import MainLayout from '../layouts/MainLayout.astro';
 import { config } from 'dotenv';
 
-config(); // Load environment variables
+config();
 
 const MONGO_URI = process.env.MONGO_URI || '';
 if (!MONGO_URI) {
   throw new Error('MONGO_URI is not defined in the environment variables.');
 }
 
-// Check if the user is already logged in
 const cookies = Astro.request.headers.get('cookie') || '';
 const isLoggedIn = cookies.includes('loggedIn=true');
 if (isLoggedIn) {
-  return Astro.redirect('/'); // Redirect to the homepage if logged in
+  return Astro.redirect('/');
 }
 ---
 <MainLayout title="Regístrate" description="Crea una cuenta en Broslunas Chat para interactuar con inteligencia artificial." image="https://cdn.broslunas.com/favicon.png">
