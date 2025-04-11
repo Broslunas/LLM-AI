@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
+import updateMessageCounter from "./MessageCounter";
 
 export default function ChatBox() {
   const [query, setQuery] = useState("");
@@ -19,6 +20,7 @@ export default function ChatBox() {
 
   const sendMessage = async () => {
     const loggedInCookie = getCookie("loggedIn");
+    const usernameCookie = getCookie("username");
     const isLoggedIn = loggedInCookie === "true";
 
     if (!isLoggedIn) {
@@ -61,6 +63,11 @@ export default function ChatBox() {
           aiMessage.loading = false;
           setChatHistory((prev) => [...prev.slice(0, -1), aiMessage]);
         }
+      }
+
+      // Call the message counter update function
+      if (usernameCookie) {
+        await updateMessageCounter(usernameCookie);
       }
     } catch (error) {
       console.error("Error while contacting the AI:", error);
