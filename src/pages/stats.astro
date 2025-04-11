@@ -1,0 +1,211 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+---
+
+<MainLayout title="Estadísticas" description="" image="https://cdn.broslunas.com/favicon.png">
+  <div class="container">
+    <div class="info-container" id="userStatsContainer" style="display: none;">
+      <div class="stats-section">
+        <h2>Estadísticas del Usuario</h2>
+        <div class="stat-row">
+          <div class="stat-box">
+            <p class="stat-label">Nombre de Usuario:</p>
+            <p class="stat-value" id="username">Cargando...</p>
+          </div>
+          <div class="stat-box">
+            <p class="stat-label">Email:</p>
+            <p class="stat-value" id="email">Cargando...</p>
+          </div>
+        </div>
+        <div class="stat-box">
+          <p class="stat-label">Mensajes Enviados:</p>
+          <p class="stat-value" id="userMessages">Cargando...</p>
+        </div>
+      </div>
+    </div>
+    <div class="divider" id="divider" style="display: none;"></div>
+    <div class="stats-container">
+      <div class="stats-section">
+        <h2>Estadísticas Totales</h2>
+        <div class="stat-box">
+          <p class="stat-label">Total de Usuarios:</p>
+          <p class="stat-value" id="totalUsers">Cargando...</p>
+        </div>
+        <div class="stat-box">
+          <p class="stat-label">Total de Mensajes:</p>
+          <p class="stat-value" id="totalMessages">Cargando...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const usernameElement = document.getElementById("username");
+    const emailElement = document.getElementById("email");
+    const userMessagesElement = document.getElementById("userMessages");
+    const totalUsersElement = document.getElementById("totalUsers");
+    const totalMessagesElement = document.getElementById("totalMessages");
+    const userStatsContainer = document.getElementById("userStatsContainer");
+    const divider = document.getElementById("divider");
+
+    function getCookie(name: string): string | null {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) {
+        const cookieValue = parts.pop()?.split(";").shift();
+        return cookieValue || null;
+      }
+      return null;
+    }
+
+    async function fetchStats() {
+      if (!totalUsersElement || !totalMessagesElement) {
+        console.error("Stats elements not found.");
+        return;
+      }
+
+      const username = getCookie("username");
+      const isLoggedIn = getCookie("loggedIn") === "true";
+
+      if (isLoggedIn && userStatsContainer && divider) {
+        userStatsContainer.style.display = "block";
+        divider.style.display = "block";
+      }
+
+      try {
+        const res = await fetch("/api/stats", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username: isLoggedIn ? username : null }),
+        });
+        if (!res.ok) {
+          throw new Error("Failed to fetch stats");
+        }
+        const stats = await res.json();
+
+        // Update total statistics
+        totalUsersElement.textContent = stats.totalUsers || 0;
+        totalMessagesElement.textContent = stats.totalMessages || 0;
+
+        // Update user statistics if logged in
+        if (isLoggedIn) {
+          usernameElement.textContent = stats.username || "Desconocido";
+          emailElement.textContent = stats.email || "No disponible";
+          userMessagesElement.textContent = stats.userMessages || 0;
+        }
+      } catch (err) {
+        console.error("Error fetching stats:", err);
+      }
+    }
+    fetchStats();
+  </script>
+  <style>
+    body {
+      background-color: #1a1a1a;
+      color: #f0f0f0;
+      font-family: "Minecraft Title", sans-serif;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 0;
+      margin: 50px auto;
+      max-width: 1200px;
+      position: relative;
+      background-color: #333333;
+      border-radius: 5px;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+    .stats-container, .info-container {
+      flex: 1;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 0.8s ease-out forwards;
+    }
+    .info-container {
+      animation-delay: 0.3s;
+    }
+    .stats-container {
+      animation-delay: 0.6s;
+    }
+    .divider {
+      width: 2px;
+      background-color: #444444;
+      height: auto;
+      margin: 0 10px;
+    }
+    .stats-columns {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .stats-section {
+      flex: 1;
+    }
+    .stats-section h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #e67e22;
+    }
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 1rem;
+    }
+    .stat-box {
+      background-color: #444444;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    .stat-label {
+      font-size: 1.2rem;
+      color: #f0f0f0;
+    }
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #e67e22;
+    }
+    #username, #email, #userMessages, #totalUsers, #totalMessages {
+      font-size: 1.2rem; /* Smaller font size for "Cargando..." */
+    }
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .divider {
+        display: none;
+      }
+      .stat-row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</MainLayout>
