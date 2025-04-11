@@ -88,9 +88,15 @@ import MainLayout from "@/layouts/MainLayout.astro";
 
         // Update user statistics if logged in
         if (isLoggedIn) {
-          usernameElement.textContent = stats.username || "Desconocido";
-          emailElement.textContent = stats.email || "No disponible";
-          userMessagesElement.textContent = stats.userMessages || 0;
+          if (usernameElement) {
+            usernameElement.textContent = stats.username || "Desconocido";
+          }
+          if (emailElement) {
+            emailElement.textContent = stats.email || "No disponible";
+          }
+          if (userMessagesElement) {
+            userMessagesElement.textContent = stats.userMessages || 0;
+          }
         }
       } catch (err) {
         console.error("Error fetching stats:", err);
