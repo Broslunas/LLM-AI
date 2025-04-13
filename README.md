@@ -21,12 +21,12 @@
 3. Configura los archivos `.env` necesarios. Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
 
    ```env
-   MONGO_URI_USERS=""
+   MONGO_URI=""
    JWT_SECRET=""
    DEEPSEEK_API_KEY=""
    ```
 
-   - **MONGO_URI_USERS**: Crea una base de datos en MongoDB y utiliza la URI de conexión proporcionada.
+   - **MONGO_URI**: Crea una base de datos en MongoDB y utiliza la URI de conexión proporcionada.
    - **JWT_SECRET**: Genera un secreto JWT en [jwtsecret.com](https://jwtsecret.com/generate).
    - **DEEPSEEK_API_KEY**: Obtén tu clave API en [DeepSeek Platform](https://platform.deepseek.com/api_keys).
 

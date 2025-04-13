@@ -3,14 +3,12 @@ import { config } from "dotenv";
 
 config();
 
-const MONGO_URI_USERS = process.env.MONGO_URI_USERS || "";
-if (!MONGO_URI_USERS) {
-  throw new Error(
-    "MONGO_URI_USERS is not defined in the environment variables."
-  );
+const MONGO_URI = process.env.MONGO_URI || "";
+if (!MONGO_URI) {
+  throw new Error("MONGO_URI is not defined in the environment variables.");
 }
 
-const client = new MongoClient(MONGO_URI_USERS);
+const client = new MongoClient(MONGO_URI);
 
 export const prerender = false;
 
