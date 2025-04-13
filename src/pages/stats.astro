@@ -36,14 +36,18 @@ import MainLayout from "@/layouts/MainLayout.astro";
           <p class="stat-value" id="totalMessages">Cargando...</p>
         </div>
       </div> <br>
-      <div class="stats-section">
-        <h2>Top Usuarios</h2>
-        <div id="topUsers" class="top-users">
-          <p>Cargando...</p>
-        </div>
+    </div> <!-- Closing stats-container -->
+  </div> <!-- Closing container -->
+
+  <div class="top-users-section">
+    <div class="stats-section">
+      <h2>Top Usuarios</h2>
+      <div id="topUsers" class="top-users">
+        <p>Cargando...</p>
       </div>
     </div>
   </div>
+  
   <script>
     const usernameElement = document.getElementById("username");
     const emailElement = document.getElementById("email");
@@ -109,15 +113,21 @@ import MainLayout from "@/layouts/MainLayout.astro";
         // Update top users
         if (topUsersElement) {
           topUsersElement.innerHTML = stats.topUsers
-            .map(
-              (user: { username: string; messageCount: number }, index: number) => `
+            .slice(0, 5) // Limit to 5 users
+            .map((user: { username: string; messageCount: number }, index: number) => {
+              let medal = "";
+              if (index === 0) medal = "🥇"; // Gold medal
+              else if (index === 1) medal = "🥈"; // Silver medal
+              else if (index === 2) medal = "🥉"; // Bronze medal
+
+              return `
                 <div class="top-user">
-                  <p class="rank">#${index + 1}</p>
+                  <p class="rank">${medal || `#${index + 1}`}</p>
                   <p class="username">${user.username || "Desconocido"}</p>
                   <p class="messages">${user.messageCount || 0} mensajes</p>
                 </div>
-              `
-            )
+              `;
+            })
             .join("") || "<p>No hay datos disponibles.</p>";
         }
       } catch (err) {
@@ -268,6 +278,15 @@ import MainLayout from "@/layouts/MainLayout.astro";
       font-size: 1rem;
       font-weight: bold;
       color: #e67e22;
+    }
+    .top-users-section {
+      margin: 50px auto;
+      max-width: 1200px;
+      background-color: #333333;
+      border-radius: 5px;
+      padding: 20px;
+      text-align: center;
+      animation: fadeIn 0.8s ease-out forwards;
     }
   </style>
 </MainLayout>
