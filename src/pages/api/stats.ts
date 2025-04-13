@@ -36,6 +36,8 @@ export async function POST({ request }: { request: Request }) {
       username: "Desconocido",
       email: "Desconocido",
       userMessages: 0,
+      registrationDate: "No disponible",
+      lastLogin: "No disponible",
     };
     if (username) {
       const user = await usersCollection.findOne({ username });
@@ -44,6 +46,8 @@ export async function POST({ request }: { request: Request }) {
           username: user.username,
           email: user.email,
           userMessages: user.messageCount || 0,
+          registrationDate: user.registrationDate || "No disponible",
+          lastLogin: user.lastLogin || "No disponible",
         };
       }
     }
