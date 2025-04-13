@@ -5,21 +5,21 @@ import jwt from "jsonwebtoken";
 
 config(); // Load environment variables
 
-const MONGO_URI = process.env.MONGO_URI || "";
+const MONGO_URI_USERS = process.env.MONGO_URI_USERS || "";
 const JWT_SECRET = process.env.JWT_SECRET || ""; // Ensure JWT_SECRET is defined in .env
-if (!MONGO_URI || !JWT_SECRET) {
+if (!MONGO_URI_USERS || !JWT_SECRET) {
   throw new Error(
-    "MONGO_URI or JWT_SECRET is not defined in the environment variables."
+    "MONGO_URI_USERS or JWT_SECRET is not defined in the environment variables."
   );
 }
 
-if (MONGO_URI.includes(",")) {
+if (MONGO_URI_USERS.includes(",")) {
   throw new Error(
-    "MONGO_URI contains multiple service names, which is not allowed. Please ensure your MongoDB connection string is correctly configured in the .env file."
+    "MONGO_URI_USERS contains multiple service names, which is not allowed. Please ensure your MongoDB connection string is correctly configured in the .env file."
   );
 }
 
-const client = new MongoClient(MONGO_URI);
+const client = new MongoClient(MONGO_URI_USERS);
 
 export const prerender = false;
 
@@ -52,7 +52,7 @@ export async function POST({ request }: { request: Request }) {
         message: error.message,
         code: error.code,
         codeName: error.codeName,
-        uri: MONGO_URI.replace(/:\/\/.*@/, "://<credentials-hidden>@"), // Log sanitized URI
+        uri: MONGO_URI_USERS.replace(/:\/\/.*@/, "://<credentials-hidden>@"), // Log sanitized URI
       });
 
       if (error.codeName === "AtlasError") {

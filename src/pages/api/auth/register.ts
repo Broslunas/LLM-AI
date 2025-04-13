@@ -5,15 +5,15 @@ import jwt from "jsonwebtoken";
 
 config(); // Load environment variables
 
-const MONGO_URI = process.env.MONGO_URI || "";
+const MONGO_URI_USERS = process.env.MONGO_URI_USERS || "";
 const JWT_SECRET = process.env.JWT_SECRET || ""; // Add JWT_SECRET to your .env file
-if (!MONGO_URI || !JWT_SECRET) {
+if (!MONGO_URI_USERS || !JWT_SECRET) {
   throw new Error(
-    "MONGO_URI or JWT_SECRET is not defined in the environment variables."
+    "MONGO_URI_USERS or JWT_SECRET is not defined in the environment variables."
   );
 }
 
-const client = new MongoClient(MONGO_URI);
+const client = new MongoClient(MONGO_URI_USERS);
 
 export const prerender = false;
 
