@@ -122,6 +122,20 @@ export async function POST({ request }: { request: Request }) {
       }`
     );
 
+    const lastLogin = new Date().toLocaleString("es-ES", {
+      timeZone: "UTC",
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
+    await usersCollection.updateOne(
+      { username: { $regex: `^${username}$`, $options: "i" } },
+      { $set: { lastLogin } } // Update last login time
+    );
+
     return new Response(
       JSON.stringify({
         response: "Inicio de sesión exitoso.",

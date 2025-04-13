@@ -47,10 +47,21 @@ export async function POST({ request }: { request: Request }) {
     // Hash the password using bcryptjs
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    const registrationDate = new Date().toLocaleString("es-ES", {
+      timeZone: "UTC",
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
     const result = await usersCollection.insertOne({
       username,
       email,
       password: hashedPassword,
+      registrationDate, // Add registration date
+      lastLogin: registrationDate, // Set lastLogin as the registration date
     });
 
     if (result.acknowledged) {
