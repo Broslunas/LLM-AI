@@ -17,6 +17,16 @@ import MainLayout from "@/layouts/MainLayout.astro";
             <p class="stat-value" id="email">Cargando...</p>
           </div>
         </div>
+        <div class="stat-row">
+          <div class="stat-box">
+            <p class="stat-label">Fecha de Registro:</p>
+            <p class="stat-value" id="registrationDate">Cargando...</p>
+          </div>
+          <div class="stat-box">
+            <p class="stat-label">Último Login:</p>
+            <p class="stat-value" id="lastLogin">Cargando...</p>
+          </div>
+        </div>
         <div class="stat-box">
           <p class="stat-label">Mensajes Enviados:</p>
           <p class="stat-value" id="userMessages">Cargando...</p>
@@ -52,6 +62,8 @@ import MainLayout from "@/layouts/MainLayout.astro";
     const usernameElement = document.getElementById("username");
     const emailElement = document.getElementById("email");
     const userMessagesElement = document.getElementById("userMessages");
+    const registrationDateElement = document.getElementById("registrationDate");
+    const lastLoginElement = document.getElementById("lastLogin");
     const totalUsersElement = document.getElementById("totalUsers");
     const totalMessagesElement = document.getElementById("totalMessages");
     const userStatsContainer = document.getElementById("userStatsContainer");
@@ -107,6 +119,12 @@ import MainLayout from "@/layouts/MainLayout.astro";
           }
           if (userMessagesElement) {
             userMessagesElement.textContent = stats.userMessages || 0;
+          }
+          if (registrationDateElement) {
+            registrationDateElement.textContent = stats.registrationDate || "No disponible";
+          }
+          if (lastLoginElement) {
+            lastLoginElement.textContent = stats.lastLogin || "No disponible";
           }
         }
 
@@ -216,7 +234,7 @@ import MainLayout from "@/layouts/MainLayout.astro";
       color: #f0f0f0;
     }
     .stat-value {
-      font-size: 1.5rem;
+      font-size: 1rem;
       font-weight: bold;
       color: #e67e22;
     }
