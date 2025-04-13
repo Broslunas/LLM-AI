@@ -65,10 +65,26 @@ export default function ChatBox() {
         }
       }
 
-      // Call the message counter update function
-      if (usernameCookie) {
-        await updateMessageCounter(usernameCookie);
-      }
+      // Log the AI's response for debugging
+      console.log("AI Response:", aiMessage.content);
+
+      // Prepare the payload for the history endpoint
+      const payload = {
+        userId: usernameCookie,
+        message: query,
+        aiResponse: aiMessage.content, // Save AI's response
+        timestamp: new Date().toISOString(),
+      };
+
+      // Log the payload being sent to the history endpoint
+      console.log("Payload to /api/messages/history:", payload);
+
+      // Save the user's message and AI's response to the history collection
+      await fetch("/api/messages/history", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
     } catch (error) {
       console.error("Error while contacting the AI:", error);
       setChatHistory((prev) => [
