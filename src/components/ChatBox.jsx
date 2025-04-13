@@ -76,9 +76,6 @@ export default function ChatBox() {
         timestamp: new Date().toISOString(),
       };
 
-      // Log the payload being sent to the history endpoint
-      console.log("Payload to /api/messages/history:", payload);
-
       // Save the user's message and AI's response to the history collection
       await fetch("/api/messages/history", {
         method: "POST",
