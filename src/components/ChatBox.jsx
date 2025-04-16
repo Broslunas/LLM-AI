@@ -131,7 +131,7 @@ export default function ChatBox() {
             >
               {message.sender === "ai" && (
                 <img
-                  src="/steave.jpg"
+                  src="/steave.webp"
                   alt="AI Avatar"
                   className="ai-avatar"
                   style={{
