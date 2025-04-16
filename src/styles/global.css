@@ -67,6 +67,11 @@ button:hover {
   transform: scale(1.05);
 }
 
+.error {
+  color: red;
+  display: none;
+  margin-bottom: 10px;
+}
 /* ------------------ HEADER ------------------*/
 header {
   background-color: #1a1a1a;

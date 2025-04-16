@@ -4,6 +4,8 @@ export const prerender = false;
 import MainLayout from '@/layouts/MainLayout.astro';
 import { config } from 'dotenv';
 
+import '@/styles/forms.css'
+
 config();
 
 const MONGO_URI = process.env.MONGO_URI || '';
@@ -20,7 +22,7 @@ if (isLoggedIn) {
 <MainLayout title="Regístrate" description="Crea una cuenta en Broslunas Chat para interactuar con inteligencia artificial." >
   <div class="container">
     <div class="info-container">
-      <h1>¿Ya tienes cuenta?</h1>
+      <h2>¿Ya tienes cuenta?</h2>
       <p>Inicia sesión para continuar.</p>
       <button onclick="window.location.href='/login'">Iniciar Sesión</button>
     </div>
@@ -28,7 +30,7 @@ if (isLoggedIn) {
     <div class="form-container">
       <form id="registerForm" method="POST">
         <h2>Registro</h2>
-        <div id="errorMessage" style="color: red; display: none; margin-bottom: 10px;"></div>
+        <div id="errorMessage" class="error"></div>
         <div class="input-group">
           <span class="icon"><i class="fas fa-user"></i></span>
           <input name="username" type="text" placeholder="Usuario" required />
@@ -93,151 +95,4 @@ if (isLoggedIn) {
       console.error("Register form not found.");
     }
   </script>
-  <style>
-    body {
-      background-color: #1a1a1a;
-      color: #f0f0f0;
-      ;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    .container {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 0;
-      margin: 50px auto;
-      max-width: 800px;
-      position: relative;
-      background-color: #333333;
-      border-radius: 5px;
-      overflow: hidden;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeIn 0.8s ease-out forwards;
-    }
-    .form-container, .info-container {
-      flex: 1;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeIn 0.8s ease-out forwards;
-    }
-    .info-container {
-      animation-delay: 0.3s;
-    }
-    .form-container {
-      animation-delay: 0.6s;
-    }
-    .divider {
-      width: 2px;
-      background-color: #444444;
-      height: auto;
-      margin: 0 10px;
-    }
-    form {
-      width: 100%;
-      max-width: 400px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .input-group {
-      position: relative;
-      width: 100%;
-      margin-bottom: 15px;
-    }
-    .input-group .icon {
-      position: absolute;
-      top: 50%;
-      left: 10px;
-      transform: translateY(-50%);
-      font-size: 1.2rem;
-      color: #e67e22;
-    }
-    .input-group input {
-      width: 100%;
-      padding: 10px 10px 10px 35px; /* Add padding to make space for the icon */
-      border: 1px solid #555555;
-      border-radius: 5px;
-      background-color: #2a2a2a;
-      color: #f0f0f0;
-      box-sizing: border-box;
-    }
-    .input-group input:focus {
-      outline: 2px solid #e67e22;
-    }
-    input, button{
-      ;
-    }
-    button {
-      width: 100%;
-      padding: 10px;
-      background-color: #e67e22;
-      border: none;
-      border-radius: 5px;
-      color: #ffffff;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-    button:hover {
-      background-color: #d35400;
-      transform: scale(1.05);
-    }
-    .info-container button {
-      padding: 10px 20px;
-      background-color: #e67e22;
-      border: none;
-      border-radius: 5px;
-      color: #ffffff;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-    .info-container button:hover {
-      background-color: #d35400;
-      transform: scale(1.05);
-    }
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .divider {
-        display: none;
-      }
-      form {
-        padding: 15px;
-      }
-      input, button {
-        padding: 8px;
-      }
-    }
-    @media (max-width: 480px) {
-      h2 {
-        font-size: 1.5rem;
-      }
-      form {
-        padding: 10px;
-      }
-    }
-  </style>
 </MainLayout>
