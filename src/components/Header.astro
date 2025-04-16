@@ -3,6 +3,7 @@ import { parse } from 'cookie';
 
 const cookies = parse(Astro.request.headers.get('cookie') || '');
 const isLoggedIn = cookies['loggedIn'] === 'true';
+const isAdmin = cookies['isAdmin'] === 'true'; // New admin check
 const isHomePage = Astro.url.pathname === '/';
 
 const logo = 'https://cdn.broslunas.com/favicon.png';
@@ -21,6 +22,11 @@ const menu = [
 	{
 		link: '/stats/',
 		label: 'Estadísticas',
+	},
+	{
+		link: '/admin/',
+		label: 'Admin',
+		hidden: !isAdmin, // Admin link visibility
 	},
 ];
 ---

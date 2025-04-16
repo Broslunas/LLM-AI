@@ -33,13 +33,19 @@ export async function POST({ request }: { request: Request }) {
     if (user && user.isAdmin) {
       return new Response(JSON.stringify({ isAdmin: true }), {
         status: 200,
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Set-Cookie": `isAdmin=true; Path=/; HttpOnly`,
+        },
       });
     }
 
     return new Response(JSON.stringify({ isAdmin: false }), {
       status: 403,
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        "Set-Cookie": `isAdmin=false; Path=/; HttpOnly`, // Clear isAdmin cookie
+      },
     });
   } catch (error) {
     console.error("Error checking admin status:", error);
