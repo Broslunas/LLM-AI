@@ -5,7 +5,7 @@ import updateMessageCounter from "@/components/MessageCounter";
 export default function ChatBox() {
   const [query, setQuery] = useState("");
   const [chatHistory, setChatHistory] = useState([
-    { sender: "ai", content: "Hola Minecrafter, que te cuentas" },
+    { sender: "ai", content: "En que puedo ayudarte hoy" },
   ]);
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -150,68 +150,7 @@ export default function ChatBox() {
       )}
       <style>
         {`
-          .chat-box {
-            background-color: #3a3a3a;
-            padding: 15px;
-            border-radius: 8px;
-            width: 70%;
-            height: 60vh; /* Adjust height dynamically */
-            margin: 5px auto;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            display: flex;
-            flex-direction: column;
-            ;
-          }
-          .chat-history {
-            flex: 1;
-            overflow-y: auto;
-            padding: 10px;
-            background-color: #2a2a2a;
-            border-radius: 5px;
-            border: 1px solid #444;
-            font-size: 1.2rem;
-          }
-          .chat-history::-webkit-scrollbar {
-            width: 8px;
-          }
-          .chat-history::-webkit-scrollbar-thumb {
-            background-color: #e67e22;
-            border-radius: 4px;
-          }
-          .chat-history::-webkit-scrollbar-thumb:hover {
-            background-color: #d35400;
-          }
-          .message {
-            margin: 5px 0;
-            animation: fadeInMessage 0.5s ease-in-out forwards;
-          }
-          .message.user {
-            text-align: right;
-          }
-          .message.ai {
-            text-align: left;
-          }
-          .message-content {
-            display: inline-block;
-            padding: 8px 12px;
-            border-radius: 12px;
-            max-width: 80%;
-            word-wrap: break-word;
-            font-size: 1.2rem;
-            min-height: 35px;
-          }
-          .message.user .message-content {
-            font-family: "Minecraft", sans-serif; /* Aplicar la fuente a los mensajes del usuario */
-            background-color: #e67e22;
-            color: #fff;
-            animation: bounceMessage 0.3s ease-in-out forwards;
-          }
-          .message.ai .message-content {
-            font-family: "Minecraft", sans-serif; /* Aplicar la fuente a los mensajes del chatbot */
-            background-color: #444;
-            color: #fff;
-            animation: pulseMessage 1.5s infinite ease-in-out;
-          }
+          
           @keyframes fadeInMessage {
             0% {
               opacity: 0;
