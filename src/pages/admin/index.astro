@@ -1,0 +1,161 @@
+---
+import MainLayout from "@/layouts/MainLayout.astro";
+---
+
+<MainLayout title="Admin Panel" description="">
+  <div id="adminContent" style="display: none;">
+    <table id="userTable" border="1" style="width: 100%; margin-top: 20px; display: none;">
+      <thead>
+        <tr>
+          <th>Usuario</th>
+          <th>Número de Mensajes</th>
+          <th>Fecha de Registro</th>
+        </tr>
+      </thead>
+      <tbody id="userTableBody"></tbody>
+    </table>
+  </div>
+
+  <!-- Modal -->
+  <div id="userModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #1a1a1a; color: #f0f0f0; padding: 20px; border-radius: 8px; z-index: 1000; max-height: 80%; overflow-y: auto;">
+    <h2>Historial de Mensajes</h2>
+    <ul id="messageHistory" style="list-style: none; padding: 0; margin-bottom: 50px;"></ul>
+    <button id="closeModal" style="position: sticky; bottom: 0; background: #d35400; color: #fff; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">Cerrar</button>
+  </div>
+  <div id="modalOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999;"></div>
+
+  <script>
+    async function checkAdminAccess() {
+      const username = document.cookie
+        .split("; ")
+        .find((row) => row.startsWith("username="))
+        ?.split("=")[1];
+
+      const adminContent = document.getElementById("adminContent");
+      const userTable = document.getElementById("userTable");
+      const userTableBody = document.getElementById("userTableBody");
+      const userModal = document.getElementById("userModal");
+      const modalOverlay = document.getElementById("modalOverlay");
+      const messageHistory = document.getElementById("messageHistory");
+      const closeModal = document.getElementById("closeModal");
+
+      if (!username) {
+        window.location.href = "/";
+        return;
+      }
+
+      try {
+        const res = await fetch("/api/auth/is-admin", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username }),
+        });
+
+        const data = await res.json();
+
+        if (data.isAdmin) {
+          if (adminContent) adminContent.style.display = "block";
+
+          // Fetch user data from /api/stats
+          const statsRes = await fetch("/api/stats", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username }),
+          });
+          const stats = await statsRes.json();
+
+          if (userTableBody) {
+            stats.topUsers.forEach((user: { username: string; messageCount: number; registrationDate: string }) => {
+              const row = document.createElement("tr");
+              row.innerHTML = `
+                <td><a href="#" class="user-link" data-user-id="${user.username}" style="color: #e67e22; text-decoration: none;">${user.username}</a></td>
+                <td>${user.messageCount}</td>
+                <td>${user.registrationDate}</td>
+              `;
+              userTableBody.appendChild(row);
+            });
+          }
+
+          if (userTable) userTable.style.display = "table";
+
+          // Add click event to user links
+          document.querySelectorAll(".user-link").forEach((link) => {
+            link.addEventListener("click", async (event) => {
+              event.preventDefault();
+              const target = event.target as HTMLElement;
+              const userId = target.getAttribute("data-user-id");
+
+              if (!userId) return;
+
+              // Fetch message history
+              const historyRes = await fetch(`/api/messages/messages`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ userId }),
+              });
+              const history = await historyRes.json();
+
+              // Populate modal with message history
+              if (messageHistory) {
+                messageHistory.innerHTML = "";
+                if (history.messages.length === 0) {
+                  const noData = document.createElement("li");
+                  noData.textContent = "No hay mensajes disponibles.";
+                  messageHistory.appendChild(noData);
+                } else {
+                  history.messages.forEach((msg: { message: string; aiResponse: string; timestamp: string }) => {
+                    const li = document.createElement("li");
+                    li.style.marginBottom = "15px";
+                    li.style.padding = "10px";
+                    li.style.border = "1px solid #333";
+                    li.style.borderRadius = "5px";
+                    li.style.backgroundColor = "#2a2a2a";
+                    li.innerHTML = `
+                      <p><strong>Mensaje:</strong> ${msg.message || "No disponible"}</p>
+                      <p><strong>Respuesta AI:</strong> ${msg.aiResponse || "No disponible"}</p>
+                      <p><strong>Fecha:</strong> ${msg.timestamp || "No disponible"}</p>
+                    `;
+                    messageHistory.appendChild(li);
+                  });
+                }
+              }
+
+              // Show modal
+              if (userModal && modalOverlay) {
+                userModal.style.display = "block";
+                modalOverlay.style.display = "block";
+              }
+            });
+          });
+
+          // Close modal on Escape key press
+          document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+              if (userModal && modalOverlay) {
+                userModal.style.display = "none";
+                modalOverlay.style.display = "none";
+              }
+            }
+          });
+
+          // Close modal
+          if (closeModal) {
+            closeModal.addEventListener("click", () => {
+              if (userModal && modalOverlay) {
+                userModal.style.display = "none";
+                modalOverlay.style.display = "none";
+              }
+            });
+          }
+        } else {
+          window.location.href = "/";
+        }
+      } catch (error) {
+        console.error("Error checking admin access:", error);
+        window.location.href = "/";
+      }
+    }
+
+    checkAdminAccess();
+  </script>
+</MainLayout>
