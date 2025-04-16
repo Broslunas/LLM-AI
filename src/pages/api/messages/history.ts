@@ -35,10 +35,10 @@ export async function POST({ request }: { request: Request }) {
 
     await client.connect();
     const db = client.db("broslunas");
-    const messagesCollection = db.collection("messages");
+    const userCollectionName = `historial-${userId}`;
+    const userMessagesCollection = db.collection(userCollectionName);
 
-    const result = await messagesCollection.insertOne({
-      userId,
+    const result = await userMessagesCollection.insertOne({
       message,
       aiResponse,
       timestamp,
