@@ -21,6 +21,10 @@ body {
   overflow: hidden;
 }
 
+textarea {
+  font-family: "Minecraft", sans-serif;
+}
+
 html {
   overflow-y: auto;
 }
@@ -146,12 +150,15 @@ main {
   margin: 5px 0;
   animation: fadeInMessage 0.5s ease-in-out forwards;
 }
+
 .message.user {
   text-align: right;
 }
+
 .message.ai {
   text-align: left;
 }
+
 .message-content {
   display: inline-block;
   padding: 8px 12px;
@@ -161,28 +168,230 @@ main {
   font-size: 1.2rem;
   min-height: 35px;
 }
+
 .message.user .message-content {
   background-color: #e67e22;
   color: #fff;
   animation: bounceMessage 0.3s ease-in-out forwards;
 }
+
 .message.ai .message-content {
   background-color: #444;
   color: #fff;
   animation: pulseMessage 1.5s infinite ease-in-out;
 }
 
+/* ----- INPUT ----- */
+.chat-input {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  background-color: #2a2a2a;
+  border-top: 1px solid #444;
+}
+
+.chat-input textarea {
+  flex: 1;
+  height: 35px;
+  background-color: #444;
+  color: #f0f0f0;
+  border: 1px solid #555;
+  border-radius: 5px;
+  padding: 10px;
+  resize: none;
+  font-size: 1.4rem;
+}
+
+.chat-input button {
+  background-color: #e67e22;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 35%;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.chat-input button:disabled {
+  background-color: #777;
+  cursor: not-allowed;
+}
+
+/* ----- SPINNER ----- */
+.spinner {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 2px solid #e67e22;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 5px;
+}
+
+/* ----- MODAL LOGIN ----- */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-content {
+  background: #1e1e1e;
+  padding: 25px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  max-width: 400px;
+  width: 90%;
+  animation: slideDown 0.3s ease-in-out;
+}
+
+.modal-content p {
+  color: #f0f0f0;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.modal-content button {
+  margin: 10px;
+  padding: 12px 25px;
+  background-color: #e67e22;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.modal-content button:hover {
+  background-color: #d35400;
+}
+
 /* ----- SCROLLBAR ----- */
 .chat-history::-webkit-scrollbar {
   width: 8px;
 }
+
 .chat-history::-webkit-scrollbar-thumb {
   background-color: #e67e22;
   border-radius: 4px;
 }
+
 .chat-history::-webkit-scrollbar-thumb:hover {
   background-color: #d35400;
 }
+
+/* ----- ANIMATIONS ----- */
+@keyframes fadeInMessage {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounceMessage {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes pulseMessage {
+  0% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.8;
+  }
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ----- RESPONSIVE ----- */
+@media (max-width: 1024px) {
+  .chat-box {
+    width: 80%;
+    height: 60vh; /* Adjust height for medium screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .chat-box {
+    width: 90%;
+    height: 70vh; /* Adjust height for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-box {
+    width: 100%;
+    height: 80vh; /* Adjust height for very small screens */
+    padding: 10px;
+  }
+
+  .chat-input textarea {
+    font-size: 1.2rem; /* Adjust font size for smaller screens */
+  }
+
+  .chat-input button {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+  }
+}
+
 /* ------------------ FOOTER ------------------*/
 footer {
   text-align: center;
