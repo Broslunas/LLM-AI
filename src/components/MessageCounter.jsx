@@ -7,12 +7,15 @@ export default async function updateMessageCounter(username) {
     });
 
     if (!res.ok) {
-      console.error("Failed to update message counter:", await res.text());
+      console.error(
+        "Error al modificar contador de número de mensajes:",
+        await res.text()
+      );
       return;
     }
 
     const data = await res.json();
   } catch (error) {
-    console.error("Error while updating message counter:", error);
+    console.error("Error al modificar contador de número de mensajes:", error);
   }
 }
