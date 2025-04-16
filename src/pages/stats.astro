@@ -4,60 +4,53 @@ import MainLayout from "@/layouts/MainLayout.astro";
 
 <MainLayout title="Estadísticas" description="" >
   <div class="container">
-    <div class="info-container" id="userStatsContainer" style="display: none;">
-      <div class="stats-section">
-        <h2>Estadísticas del Usuario</h2>
-        <div class="stat-row">
-          <div class="stat-box">
-            <p class="stat-label">Nombre de Usuario:</p>
-            <p class="stat-value" id="username">Cargando...</p>
+    <div class="stats-columns">
+      <section class="info-container" id="userStatsContainer" style="display: none;">
+        <div class="stats-section">
+          <h2>Estadísticas del Usuario</h2>
+          <div class="stat-row">
+            <div class="stat-box">
+              <p class="stat-label">Nombre de Usuario:</p>
+              <p class="stat-value" id="username">Cargando...</p>
+            </div>
+            <div class="stat-box">
+              <p class="stat-label">Email:</p>
+              <p class="stat-value" id="email">Cargando...</p>
+            </div>
+          </div>
+          <div class="stat-row">
+            <div class="stat-box">
+              <p class="stat-label">Fecha de Registro:</p>
+              <p class="stat-value" id="registrationDate">Cargando...</p>
+            </div>
+            <div class="stat-box">
+              <p class="stat-label">Último Login:</p>
+              <p class="stat-value" id="lastLogin">Cargando...</p>
+            </div>
           </div>
           <div class="stat-box">
-            <p class="stat-label">Email:</p>
-            <p class="stat-value" id="email">Cargando...</p>
+            <p class="stat-label">Mensajes Enviados:</p>
+            <p class="stat-value" id="userMessages">Cargando...</p>
           </div>
         </div>
-        <div class="stat-row">
+      </section>
+      <div class="divider" id="divider" style="display: none;"></div>
+      <section class="info-container">
+        <div class="stats-section">
+          <h2>Estadísticas Totales</h2>
           <div class="stat-box">
-            <p class="stat-label">Fecha de Registro:</p>
-            <p class="stat-value" id="registrationDate">Cargando...</p>
+            <p class="stat-label">Total de Usuarios:</p>
+            <p class="stat-value" id="totalUsers">Cargando...</p>
           </div>
           <div class="stat-box">
-            <p class="stat-label">Último Login:</p>
-            <p class="stat-value" id="lastLogin">Cargando...</p>
+            <p class="stat-label">Total de Mensajes:</p>
+            <p class="stat-value" id="totalMessages">Cargando...</p>
           </div>
         </div>
-        <div class="stat-box">
-          <p class="stat-label">Mensajes Enviados:</p>
-          <p class="stat-value" id="userMessages">Cargando...</p>
-        </div>
-      </div>
-    </div>
-    <div class="divider" id="divider" style="display: none;"></div>
-    <div class="stats-container">
-      <div class="stats-section">
-        <h2>Estadísticas Totales</h2>
-        <div class="stat-box">
-          <p class="stat-label">Total de Usuarios:</p>
-          <p class="stat-value" id="totalUsers">Cargando...</p>
-        </div>
-        <div class="stat-box">
-          <p class="stat-label">Total de Mensajes:</p>
-          <p class="stat-value" id="totalMessages">Cargando...</p>
-        </div>
-      </div> <br>
-    </div> <!-- Closing stats-container -->
-  </div> <!-- Closing container -->
-
-  <div class="top-users-section">
-    <div class="stats-section">
-      <h2>Top Usuarios</h2>
-      <div id="topUsers" class="top-users">
-        <p>Cargando...</p>
-      </div>
+      </section>
     </div>
   </div>
-  
+
   <script>
     const usernameElement = document.getElementById("username");
     const emailElement = document.getElementById("email");
@@ -68,7 +61,6 @@ import MainLayout from "@/layouts/MainLayout.astro";
     const totalMessagesElement = document.getElementById("totalMessages");
     const userStatsContainer = document.getElementById("userStatsContainer");
     const divider = document.getElementById("divider");
-    const topUsersElement = document.getElementById("topUsers");
 
     function getCookie(name: string): string | null {
       const value = `; ${document.cookie}`;
@@ -127,27 +119,6 @@ import MainLayout from "@/layouts/MainLayout.astro";
             lastLoginElement.textContent = stats.lastLogin || "No disponible";
           }
         }
-
-        // Update top users
-        if (topUsersElement) {
-          topUsersElement.innerHTML = stats.topUsers
-            .slice(0, 5) // Limit to 5 users
-            .map((user: { username: string; messageCount: number }, index: number) => {
-              let medal = "";
-              if (index === 0) medal = "🥇"; // Gold medal
-              else if (index === 1) medal = "🥈"; // Silver medal
-              else if (index === 2) medal = "🥉"; // Bronze medal
-
-              return `
-                <div class="top-user">
-                  <p class="rank">${medal || `#${index + 1}`}</p>
-                  <p class="username">${user.username || "Desconocido"}</p>
-                  <p class="messages">${user.messageCount || 0} mensajes</p>
-                </div>
-              `;
-            })
-            .join("") || "<p>No hay datos disponibles.</p>";
-        }
       } catch (err) {
         console.error("Error fetching stats:", err);
       }
@@ -155,156 +126,79 @@ import MainLayout from "@/layouts/MainLayout.astro";
     fetchStats();
   </script>
   <style>
-    body {
-      background-color: #1a1a1a;
-      color: #f0f0f0;
-      ;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
     .container {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 0;
-      margin: 50px auto;
       max-width: 1200px;
-      position: relative;
-      background-color: #333333;
-      border-radius: 5px;
-      overflow: hidden;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeIn 0.8s ease-out forwards;
-    }
-    .stats-container, .info-container {
-      flex: 1;
+      margin: 0 auto;
       padding: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeIn 0.8s ease-out forwards;
+      font-family: "Minecraft", sans-serif;
+      background-color: #333333;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
-    .info-container {
-      animation-delay: 0.3s;
-    }
-    .stats-container {
-      animation-delay: 0.6s;
-    }
-    .divider {
-      width: 2px;
+
+    .stats-section {
       background-color: #444444;
-      height: auto;
-      margin: 0 10px;
+      border: 1px solid #555555;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
+
+    .stats-section h2 {
+      font-size: 2.2rem;
+      margin-bottom: 15px;
+      color: #e67e22;
+      text-align: center;
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 15px;
+    }
+
+    .stat-box {
+      flex: 1;
+      margin: 0 10px;
+      text-align: center;
+      background-color: #2a2a2a;
+      border-radius: 5px;
+      border: 1px solid #555555;
+    }
+
+    .stat-label {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #e67e22;
+      margin-bottom: 3px;
+    }
+
+    .stat-value {
+      font-size: 1rem;
+      color: #f0f0f0;
+    }
+
+    .divider {
+      height: 2px;
+      background-color: #555555;
+      margin: 20px 0;
+    }
+
     .stats-columns {
       display: flex;
       justify-content: space-between;
       gap: 20px;
     }
-    .stats-section {
+
+    .info-container {
       flex: 1;
     }
-    .stats-section h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: #e67e22;
-    }
-    .stat-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      margin-bottom: 1rem;
-    }
-    .stat-box {
-      background-color: #444444;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 1rem;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    }
-    .stat-label {
-      font-size: 1.2rem;
-      color: #f0f0f0;
-    }
-    .stat-value {
-      font-size: 1rem;
-      font-weight: bold;
-      color: #e67e22;
-    }
-    #username, #email, #userMessages, #totalUsers, #totalMessages {
-      font-size: 1.2rem; /* Smaller font size for "Cargando..." */
-    }
-    p {
-      font-size: 1.2rem;
-      margin-bottom: 1.5rem;
-    }
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
+
     @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-        align-items: stretch;
-      }
-      .divider {
-        display: none;
-      }
-      .stat-row {
+      .stats-columns {
         flex-direction: column;
       }
-    }
-    .top-users {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 20px;
-      justify-content: center;
-      margin-top: 20px;
-    }
-    .top-user {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background-color: #444444;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      text-align: center;
-    }
-    .rank {
-      font-size: 1.5rem;
-      font-weight: bold;
-      color: #e67e22;
-      margin-bottom: 10px;
-    }
-    .username {
-      font-size: 1.2rem;
-      color: #f0f0f0;
-      margin-bottom: 10px;
-    }
-    .messages {
-      font-size: 1rem;
-      font-weight: bold;
-      color: #e67e22;
-    }
-    .top-users-section {
-      margin: 50px auto;
-      max-width: 1200px;
-      background-color: #333333;
-      border-radius: 5px;
-      padding: 20px;
-      text-align: center;
-      animation: fadeIn 0.8s ease-out forwards;
     }
   </style>
 </MainLayout>
