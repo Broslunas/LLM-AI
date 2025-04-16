@@ -112,8 +112,35 @@ export default function ChatBox() {
           <div
             key={index}
             className={`message ${message.sender === "user" ? "user" : "ai"}`}
+            style={{
+              display: "flex",
+              justifyContent:
+                message.sender === "ai" ? "flex-start" : "flex-end",
+            }}
           >
-            <span className="message-content">
+            <span
+              className="message-content"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                maxWidth: "fit-content",
+                backgroundColor: message.sender === "ai" ? "#333" : "#e67e22",
+                padding: "0.5em 1em",
+                borderRadius: "0.5em",
+              }}
+            >
+              {message.sender === "ai" && (
+                <img
+                  src="/steave.jpg"
+                  alt="AI Avatar"
+                  className="ai-avatar"
+                  style={{
+                    width: "1em",
+                    height: "1em",
+                    marginRight: "0.5em",
+                  }}
+                />
+              )}
               {message.sender === "ai" && message.loading ? (
                 <span className="spinner"></span>
               ) : null}
