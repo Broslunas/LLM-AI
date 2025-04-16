@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import ReactMarkdown from "react-markdown";
-import updateMessageCounter from "./MessageCounter";
+import updateMessageCounter from "@components/MessageCounter";
 
 export default function ChatBox() {
   const [query, setQuery] = useState("");
