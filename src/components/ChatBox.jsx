@@ -160,7 +160,7 @@ export default function ChatBox() {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             display: flex;
             flex-direction: column;
-            font-family: "Minecraft Title", sans-serif;
+            ;
           }
           .chat-history {
             flex: 1;
@@ -361,7 +361,7 @@ export default function ChatBox() {
             border-radius: 5px;
             cursor: pointer;
             font-size: 1rem;: 2px solid #e67e22;
-            font-family: "Minecraft Title", sans-serif;
+            ;
             transition: background-color 0.3s ease;
           }
           .modal-content button:hover {
