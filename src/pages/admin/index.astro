@@ -8,6 +8,7 @@ import MainLayout from "@/layouts/MainLayout.astro";
       <thead>
         <tr>
           <th>Usuario</th>
+          <th>Correo</th>
           <th>Número de Mensajes</th>
           <th>Fecha de Registro</th>
         </tr>
@@ -65,10 +66,11 @@ import MainLayout from "@/layouts/MainLayout.astro";
           const stats = await statsRes.json();
 
           if (userTableBody) {
-            stats.topUsers.forEach((user: { username: string; messageCount: number; registrationDate: string }) => {
+            stats.topUsers.forEach((user: { username: string; email: string; messageCount: number; registrationDate: string }) => {
               const row = document.createElement("tr");
               row.innerHTML = `
                 <td><a href="#" class="user-link" data-user-id="${user.username}" style="color: #e67e22; text-decoration: none;">${user.username}</a></td>
+                <td>${user.email}</td>
                 <td>${user.messageCount}</td>
                 <td>${user.registrationDate}</td>
               `;

@@ -29,7 +29,14 @@ export async function POST({ request }: { request: Request }) {
     const topUsers = await usersCollection
       .find(
         {},
-        { projection: { username: 1, messageCount: 1, registrationDate: 1 } }
+        {
+          projection: {
+            username: 1,
+            email: 1,
+            messageCount: 1,
+            registrationDate: 1,
+          },
+        }
       )
       .sort({ messageCount: -1 })
       .limit(5)
@@ -62,6 +69,7 @@ export async function POST({ request }: { request: Request }) {
         totalMessages: totalMessages[0]?.total || 0,
         topUsers: topUsers.map((user) => ({
           username: user.username,
+          email: user.email,
           messageCount: user.messageCount || 0,
           registrationDate: user.registrationDate || "No disponible",
         })),
