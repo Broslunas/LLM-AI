@@ -22,7 +22,7 @@ if (isLoggedIn) {
     <div class="form-container">
       <form id="loginForm" method="POST">
         <h2>Iniciar Sesión</h2>
-        <div id="errorMessage" style="color: red; display: none; margin-bottom: 10px;"></div>
+        <div id="errorMessage" class="error" style=""></div>
         <div class="input-group">
           <span class="icon"><i class="fas fa-user"></i></span>
           <input name="username" type="text" placeholder="Usuario" required />
@@ -36,7 +36,7 @@ if (isLoggedIn) {
     </div>
     <div class="divider"></div>
     <div class="info-container">
-      <h1>¿Nuevo por aquí?</h1>
+      <h2>¿Nuevo por aquí?</h2>
       <p>Regístrate para acceder a todas las funcionalidades.</p>
       <button onclick="window.location.href='/register'">Registro</button>
     </div>
@@ -89,30 +89,16 @@ if (isLoggedIn) {
     }
   </script>
   <style>
-    body {
-      background-color: #1a1a1a;
-      color: #f0f0f0;
-      ;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    input, button{
-      ;
-    }
     .container {
       display: flex;
       justify-content: center;
-      align-items: flex-start;
-      gap: 0;
       margin: 50px auto;
       max-width: 800px;
       position: relative;
       background-color: #333333;
       border-radius: 5px;
-      overflow: hidden;
     }
+    
     .form-container, .info-container {
       flex: 1;
       padding: 20px;
@@ -122,12 +108,20 @@ if (isLoggedIn) {
       align-items: center;
       text-align: center;
     }
+
     .divider {
       width: 2px;
       background-color: #444444;
       height: auto;
       margin: 0 10px;
     }
+
+    .error {
+      color: red; 
+      display: none; 
+      margin-bottom: 10px;
+    }
+
     form {
       width: 100%;
       max-width: 400px;
@@ -135,15 +129,18 @@ if (isLoggedIn) {
       flex-direction: column;
       align-items: center;
     }
+
     h2 {
       text-align: center;
       margin-bottom: 20px;
     }
+
     .input-group {
       position: relative;
       width: 100%;
       margin-bottom: 15px;
     }
+
     .input-group .icon {
       position: absolute;
       top: 50%;
@@ -152,6 +149,7 @@ if (isLoggedIn) {
       font-size: 1.2rem;
       color: #e67e22;
     }
+    
     .input-group input {
       width: 100%;
       padding: 10px 10px 10px 35px; /* Add padding to make space for the icon */
@@ -161,24 +159,21 @@ if (isLoggedIn) {
       color: #f0f0f0;
       box-sizing: border-box;
     }
+
     .input-group input:focus {
       outline: 2px solid #e67e22;
     }
+    
     button {
       width: 100%;
-      padding: 10px;
-      background-color: #e67e22;
-      border: none;
-      border-radius: 5px;
-      color: #ffffff;
-      cursor: pointer;
-      font-size: 1rem;
       transition: background-color 0.3s ease, transform 0.2s ease;
     }
+
     button:hover {
       background-color: #d35400;
       transform: scale(1.05);
     }
+
     .info-container button {
       padding: 10px 20px;
       background-color: #e67e22;
@@ -189,10 +184,12 @@ if (isLoggedIn) {
       font-size: 1rem;
       transition: background-color 0.3s ease, transform 0.2s ease;
     }
+
     .info-container button:hover {
       background-color: #d35400;
       transform: scale(1.05);
     }
+
     @media (max-width: 768px) {
       .container {
         flex-direction: column;
@@ -208,6 +205,7 @@ if (isLoggedIn) {
         padding: 8px;
       }
     }
+
     @media (max-width: 480px) {
       h2 {
         font-size: 1.5rem;
