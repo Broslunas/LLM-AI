@@ -37,14 +37,6 @@ export async function POST({ request }: { request: Request }) {
     const db = client.db("broslunas");
     const messagesCollection = db.collection("messages");
 
-    // Log the data being inserted into the database
-    console.log("Data being inserted into the database:", {
-      userId,
-      message,
-      aiResponse,
-      timestamp,
-    });
-
     const result = await messagesCollection.insertOne({
       userId,
       message,
