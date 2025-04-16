@@ -5,8 +5,8 @@ export const prerender = false
 ---
 
 <MainLayout title="Admin Panel" description="">
-  <div id="adminContent" style="display: none;">
-    <table id="userTable" border="1" style="width: 100%; margin-top: 20px; display: none;">
+  <div id="adminContent" class="hidden">
+    <table id="userTable" class="user-table hidden">
       <thead>
         <tr>
           <th>Usuario</th>
@@ -20,12 +20,12 @@ export const prerender = false
   </div>
 
   <!-- Modal -->
-  <div id="userModal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #1a1a1a; color: #f0f0f0; padding: 20px; border-radius: 8px; z-index: 1000; max-height: 80%; overflow-y: auto;">
+  <div id="userModal" class="modal hidden">
     <h2>Historial de Mensajes</h2>
-    <ul id="messageHistory" style="list-style: none; padding: 0; margin-bottom: 50px;"></ul>
-    <button id="closeModal" style="position: sticky; bottom: 0; background: #d35400; color: #fff; padding: 10px; border: none; border-radius: 5px; cursor: pointer;">Cerrar</button>
+    <ul id="messageHistory" class="message-history"></ul>
+    <button id="closeModal" class="close-modal">Cerrar</button>
   </div>
-  <div id="modalOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 999;"></div>
+  <div id="modalOverlay" class="modal-overlay hidden"></div>
 
   <script>
     async function checkAdminAccess() {
@@ -69,21 +69,18 @@ export const prerender = false
 
           if (userTableBody) {
             stats.topUsers.forEach((user: { username: string; email: string; messageCount: number; registrationDate: string }) => {
-              const formattedDate = new Date(user.registrationDate).toLocaleString("es-ES", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-              });
               const row = document.createElement("tr");
               row.innerHTML = `
                 <td><a href="#" class="user-link" data-user-id="${user.username}" style="color: #e67e22; text-decoration: none;">${user.username}</a></td>
                 <td>${user.email}</td>
                 <td>${user.messageCount}</td>
-                <td>${formattedDate}</td>
+                <td>${user.registrationDate}</td>
               `;
               userTableBody.appendChild(row);
+
+              const separator = document.createElement("tr");
+              separator.innerHTML = `<td colspan="4" class="row-separator"></td>`;
+              userTableBody.appendChild(separator);
             });
           }
 
@@ -123,17 +120,18 @@ export const prerender = false
                       minute: "2-digit",
                     });
                     const li = document.createElement("li");
-                    li.style.marginBottom = "15px";
-                    li.style.padding = "10px";
-                    li.style.border = "1px solid #333";
-                    li.style.borderRadius = "5px";
-                    li.style.backgroundColor = "#2a2a2a";
+                    li.classList.add("message-item");
                     li.innerHTML = `
                       <p><strong>Mensaje:</strong> ${msg.message || "No disponible"}</p>
                       <p><strong>Respuesta AI:</strong> ${msg.aiResponse || "No disponible"}</p>
                       <p><strong>Fecha:</strong> ${formattedTimestamp}</p>
                     `;
                     messageHistory.appendChild(li);
+
+                    // Add separator
+                    const separator = document.createElement("hr");
+                    separator.classList.add("message-separator");
+                    messageHistory.appendChild(separator);
                   });
                 }
               }
@@ -176,4 +174,76 @@ export const prerender = false
 
     checkAdminAccess();
   </script>
+
+  <style>
+    .hidden {
+      display: none;
+    }
+
+    .user-table {
+      width: 100%;
+      margin-top: 20px;
+      border: 1px solid #000;
+    }
+
+    .row-separator {
+      height: 1px;
+      background-color: #ccc;
+    }
+
+    .modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #1a1a1a;
+      color: #f0f0f0;
+      padding: 20px;
+      border-radius: 8px;
+      z-index: 1000;
+      max-height: 80%;
+      overflow-y: auto;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+
+    .message-history {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 50px;
+    }
+
+    .message-item {
+      margin-bottom: 15px;
+      padding: 10px;
+      border: 1px solid #333;
+      border-radius: 5px;
+      background-color: #2a2a2a;
+    }
+
+    .message-separator {
+      border: none;
+      border-top: 1px solid #444;
+      margin: 10px 0;
+    }
+
+    .close-modal {
+      position: sticky;
+      bottom: 0;
+      background: #d35400;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
 </MainLayout>
